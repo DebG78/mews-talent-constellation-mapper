@@ -46,6 +46,7 @@ export const generateMockEmployees = (count: number = 50): Employee[] => {
   const departments = ['Engineering', 'Marketing', 'Sales', 'Product', 'Customer Support', 'Operations', 'Finance', 'HR'];
   const positions = ['Manager', 'Director', 'Team Lead', 'Senior Specialist', 'Specialist', 'Coordinator', 'Associate'];
   const readinessOptions: ['Ready Now', 'Ready Soon', 'Not Ready'] = ['Ready Now', 'Ready Soon', 'Not Ready'];
+  const jobGradeOptions: ['IC', 'Manager'] = ['IC', 'Manager'];
   
   return Array.from({ length: count }, (_, i) => {
     // Generate skill enablers
@@ -68,6 +69,9 @@ export const generateMockEmployees = (count: number = 50): Employee[] => {
     joinDate.setFullYear(joinDate.getFullYear() - randomBetween(0, 5));
     joinDate.setMonth(randomBetween(0, 11));
     joinDate.setDate(randomBetween(1, 28));
+
+    // Assign either IC or Manager role
+    const jobGrade = jobGradeOptions[randomBetween(0, 1)];
     
     return {
       id: `EMP-${1000 + i}`,
@@ -84,6 +88,7 @@ export const generateMockEmployees = (count: number = 50): Employee[] => {
       },
       zonePosition: determinePosition(zone),
       joinDate: joinDate.toISOString().split('T')[0],
+      jobGrade: jobGrade,
     };
   });
 };

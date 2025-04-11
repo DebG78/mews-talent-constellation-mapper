@@ -9,6 +9,7 @@ export interface Employee {
   skillEnablers: SkillEnablers;
   zonePosition: ZonePosition;
   joinDate: string;
+  jobGrade?: 'IC' | 'Manager';
   developmentOptions?: DevelopmentOption[];
 }
 
@@ -35,3 +36,4 @@ export interface ZonePosition {
 
 export type Zone = 'Acceleration' | 'Development' | 'Support';
 export type Readiness = 'Ready Now' | 'Ready Soon' | 'Not Ready';
+export type JobGrade = 'IC' | 'Manager' | 'All';

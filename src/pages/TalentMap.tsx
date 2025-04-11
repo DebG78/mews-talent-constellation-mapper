@@ -8,7 +8,7 @@ import {
   TabsList, 
   TabsTrigger 
 } from "@/components/ui/tabs";
-import { Employee, Readiness, Zone } from "@/types/employee";
+import { Employee, Readiness, Zone, JobGrade } from "@/types/employee";
 import { mockEmployees } from "@/services/mockData";
 import { ChevronLeft, ChevronRight, HelpCircle, User } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -33,10 +33,12 @@ const TalentMap = () => {
     department: string;
     zone: Zone | 'All';
     readiness: Readiness | 'All';
+    jobGrade: JobGrade;
   }>({
     department: 'All',
     zone: 'All',
     readiness: 'All',
+    jobGrade: 'All',
   });
   
   const mapRef = useRef<HTMLDivElement>(null);
@@ -46,6 +48,7 @@ const TalentMap = () => {
     if (filter.department !== 'All' && emp.department !== filter.department) return false;
     if (filter.zone !== 'All' && emp.zonePosition.zone !== filter.zone) return false;
     if (filter.readiness !== 'All' && emp.readiness !== filter.readiness) return false;
+    if (filter.jobGrade !== 'All' && emp.jobGrade !== filter.jobGrade) return false;
     return true;
   });
 
@@ -62,6 +65,7 @@ const TalentMap = () => {
       department: 'All',
       zone: 'All',
       readiness: 'All',
+      jobGrade: 'All',
     });
     toast({
       title: "Filters Reset",
