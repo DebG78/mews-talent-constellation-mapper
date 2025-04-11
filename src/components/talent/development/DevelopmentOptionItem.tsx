@@ -1,13 +1,15 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Pencil, X, CalendarDays, Clock, Check, Save } from "lucide-react";
 import { DevelopmentOption } from "@/types/employee";
-import { FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 interface DevelopmentOptionItemProps {
   option: DevelopmentOption;
@@ -17,6 +19,17 @@ interface DevelopmentOptionItemProps {
   onDelete: (id: string) => void;
 }
 
+// Define validation schema
+const formSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().min(1, { message: "Description is required" }),
+  status: z.enum(["Planned", "In Progress", "Completed"]),
+  dueDate: z.string().optional(),
+});
+
+// Type for the form data
+type FormValues = z.infer<typeof formSchema>;
+
 const DevelopmentOptionItem = ({ 
   option, 
   editingId, 
@@ -24,7 +37,15 @@ const DevelopmentOptionItem = ({
   onSave, 
   onDelete 
 }: DevelopmentOptionItemProps) => {
-  const editForm = useForm<DevelopmentOption>();
+  const editForm = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: option.title,
+      description: option.description,
+      status: option.status,
+      dueDate: option.dueDate || '',
+    }
+  });
   
   // Get status badge
   const getStatusBadge = (status: string) => {
@@ -41,76 +62,118 @@ const DevelopmentOptionItem = ({
   };
 
   // Handle form submission
-  const handleSubmit = (data: DevelopmentOption) => {
-    onSave(data);
+  const handleSubmit = (data: FormValues) => {
+    onSave({
+      ...data,
+      id: option.id
+    });
   };
 
   // Initialize the form when entering edit mode
-  React.useEffect(() => {
+  useEffect(() => {
     if (editingId === option.id) {
-      editForm.reset(option);
+      editForm.reset({
+        title: option.title,
+        description: option.description,
+        status: option.status,
+        dueDate: option.dueDate || '',
+      });
     }
-  }, [editingId, option, editForm]);
+  }, [editingId, option, editForm.reset]);
 
   return (
     <div className="border rounded-md p-2">
       {editingId === option.id ? (
-        <form onSubmit={editForm.handleSubmit(handleSubmit)} className="space-y-2">
-          <FormItem className="space-y-1">
-            <FormLabel className="text-xs">Title</FormLabel>
-            <Input 
-              {...editForm.register('title')}
-              className="h-8 text-sm" 
+        <Form {...editForm}>
+          <form onSubmit={editForm.handleSubmit(handleSubmit)} className="space-y-2">
+            <FormField
+              control={editForm.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-xs">Title</FormLabel>
+                  <FormControl>
+                    <Input 
+                      {...field}
+                      className="h-8 text-sm" 
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </FormItem>
-          
-          <FormItem className="space-y-1">
-            <FormLabel className="text-xs">Description</FormLabel>
-            <Textarea 
-              {...editForm.register('description')}
-              className="min-h-[60px] text-sm" 
-            />
-          </FormItem>
-          
-          <div className="grid grid-cols-2 gap-2">
-            <FormItem className="space-y-1">
-              <FormLabel className="text-xs">Status</FormLabel>
-              <select 
-                {...editForm.register('status')}
-                className="h-8 w-full rounded-md border border-input bg-background px-3 py-1 text-sm"
-              >
-                <option value="Planned">Planned</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </select>
-            </FormItem>
             
-            <FormItem className="space-y-1">
-              <FormLabel className="text-xs">Due Date (Optional)</FormLabel>
-              <Input 
-                {...editForm.register('dueDate')}
-                className="h-8 text-sm" 
-                type="date"
+            <FormField
+              control={editForm.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-xs">Description</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      {...field}
+                      className="min-h-[60px] text-sm" 
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            
+            <div className="grid grid-cols-2 gap-2">
+              <FormField
+                control={editForm.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs">Status</FormLabel>
+                    <FormControl>
+                      <select 
+                        {...field}
+                        className="h-8 w-full rounded-md border border-input bg-background px-3 py-1 text-sm"
+                      >
+                        <option value="Planned">Planned</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                      </select>
+                    </FormControl>
+                  </FormItem>
+                )}
               />
-            </FormItem>
-          </div>
-          
-          <div className="flex justify-end gap-2 pt-1">
-            <Button 
-              type="button" 
-              variant="outline" 
-              size="sm" 
-              onClick={() => onEdit(null as any)}
-              className="h-8"
-            >
-              Cancel
-            </Button>
-            <Button type="submit" size="sm" className="h-8">
-              <Save className="h-3.5 w-3.5 mr-1" />
-              Save
-            </Button>
-          </div>
-        </form>
+              
+              <FormField
+                control={editForm.control}
+                name="dueDate"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs">Due Date (Optional)</FormLabel>
+                    <FormControl>
+                      <Input 
+                        {...field}
+                        className="h-8 text-sm" 
+                        type="date"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            <div className="flex justify-end gap-2 pt-1">
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm" 
+                onClick={() => onEdit(null as any)}
+                className="h-8"
+              >
+                Cancel
+              </Button>
+              <Button type="submit" size="sm" className="h-8">
+                <Save className="h-3.5 w-3.5 mr-1" />
+                Save
+              </Button>
+            </div>
+          </form>
+        </Form>
       ) : (
         <>
           <div className="flex justify-between items-start mb-1">
