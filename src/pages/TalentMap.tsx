@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -115,13 +116,13 @@ const TalentMap = () => {
           </div>
 
           <div className="col-span-12 lg:col-span-3 space-y-4">
-            <Tabs defaultValue="filters">
+            <Tabs defaultValue="filters" className="h-[800px]">
               <TabsList className="grid grid-cols-2 mb-4 w-full">
                 <TabsTrigger value="filters">Filters</TabsTrigger>
                 <TabsTrigger value="details">Details</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="filters" className="mt-0">
+              <TabsContent value="filters" className="mt-0 h-[calc(800px-48px)]">
                 <TalentMapFilters 
                   employees={employees}
                   filter={filter}
@@ -135,7 +136,7 @@ const TalentMap = () => {
                 </div>
               </TabsContent>
               
-              <TabsContent value="details" className="mt-0">
+              <TabsContent value="details" className="mt-0 h-[calc(800px-48px)] overflow-hidden">
                 {selectedEmployee ? (
                   <EmployeeDetailPanel employee={selectedEmployee} />
                 ) : (

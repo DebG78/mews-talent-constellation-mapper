@@ -5,6 +5,7 @@ import EmployeeBasicInfo from "./EmployeeBasicInfo";
 import PerformanceRating from "./PerformanceRating";
 import SkillEnablersSection from "./SkillEnablersSection";
 import DevelopmentSuggestions from "./DevelopmentSuggestions";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
@@ -42,21 +43,23 @@ const EmployeeDetailPanel = ({ employee }: EmployeeDetailPanelProps) => {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle>{employee.name}</CardTitle>
+        <CardTitle className="text-xl truncate">{employee.name}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <EmployeeBasicInfo 
-          employee={employee} 
-          getZoneColor={getZoneColor} 
-          getReadinessColor={getReadinessColor} 
-        />
+      <ScrollArea className="h-[calc(800px-120px)]">
+        <CardContent className="space-y-4">
+          <EmployeeBasicInfo 
+            employee={employee} 
+            getZoneColor={getZoneColor} 
+            getReadinessColor={getReadinessColor} 
+          />
 
-        <PerformanceRating rating={employee.performanceRating} />
+          <PerformanceRating rating={employee.performanceRating} />
 
-        <SkillEnablersSection skillEnablers={employee.skillEnablers} />
+          <SkillEnablersSection skillEnablers={employee.skillEnablers} />
 
-        <DevelopmentSuggestions zone={employee.zonePosition.zone} />
-      </CardContent>
+          <DevelopmentSuggestions zone={employee.zonePosition.zone} />
+        </CardContent>
+      </ScrollArea>
     </Card>
   );
 };
