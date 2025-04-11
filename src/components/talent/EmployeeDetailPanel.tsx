@@ -5,7 +5,7 @@ import EmployeeBasicInfo from "./EmployeeBasicInfo";
 import PerformanceRating from "./PerformanceRating";
 import SkillEnablersSection from "./SkillEnablersSection";
 import DevelopmentSuggestions from "./DevelopmentSuggestions";
-import DevelopmentOptions from "./DevelopmentOptions";
+import DevelopmentOptions from "./development/DevelopmentOptions";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 
