@@ -79,9 +79,9 @@ const TalentMapVisualization = ({
               />
             </div>
             {selectedEmployee?.id === employee.id && (
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white p-2 rounded shadow-lg z-10 whitespace-nowrap">
-                <p className="font-semibold text-sm">{employee.name}</p>
-                <p className="text-xs text-gray-600">{employee.position}</p>
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white p-2 rounded shadow-lg z-10 whitespace-nowrap max-w-xs">
+                <p className="font-semibold text-sm truncate">{employee.name}</p>
+                <p className="text-xs text-gray-600 truncate">{employee.position}</p>
               </div>
             )}
           </div>

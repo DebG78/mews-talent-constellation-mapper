@@ -41,12 +41,12 @@ const EmployeeDetailPanel = ({ employee }: EmployeeDetailPanelProps) => {
   };
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-xl truncate">{employee.name}</CardTitle>
+    <Card className="h-full">
+      <CardHeader className="pb-2 pt-4">
+        <CardTitle className="text-lg truncate">{employee.name}</CardTitle>
       </CardHeader>
-      <ScrollArea className="h-[calc(800px-120px)]">
-        <CardContent className="space-y-4">
+      <ScrollArea className="h-[calc(100%-60px)]">
+        <CardContent className="space-y-4 px-4">
           <EmployeeBasicInfo 
             employee={employee} 
             getZoneColor={getZoneColor} 
