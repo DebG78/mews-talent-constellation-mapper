@@ -10,7 +10,8 @@ import {
   ChevronLeft, 
   Home,
   Network,
-  Star
+  Star,
+  GraduationCap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -60,6 +61,12 @@ export const Sidebar = () => {
             to="/talent-constellation"
             icon={<Star size={20} />}
             label="Constellation"
+            collapsed={collapsed}
+          />
+          <SidebarItem
+            to="/skill-assessment"
+            icon={<GraduationCap size={20} />}
+            label="Skill Assessment"
             collapsed={collapsed}
           />
           <SidebarItem
