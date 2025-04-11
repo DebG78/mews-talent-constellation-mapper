@@ -22,10 +22,12 @@ import { Employee } from "@/types/employee";
 import { Search, ChevronDown, Download, UserPlus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import EmployeeDetailPanel from "@/components/talent/EmployeeDetailPanel";
 
 const Employees = () => {
-  const [employees] = useState<Employee[]>(mockEmployees);
+  const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   
   // Filter employees based on search query
   const filteredEmployees = employees.filter(emp => 
@@ -33,6 +35,15 @@ const Employees = () => {
     emp.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
     emp.department.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Update employee in the list when development options change
+  const handleUpdateEmployee = (updatedEmployee: Employee) => {
+    const updatedEmployees = employees.map(emp => 
+      emp.id === updatedEmployee.id ? updatedEmployee : emp
+    );
+    setEmployees(updatedEmployees);
+    setSelectedEmployee(updatedEmployee);
+  };
 
   // Get badge color based on zone
   const getZoneBadgeClass = (zone: string) => {
@@ -64,7 +75,7 @@ const Employees = () => {
 
   return (
     <MainLayout>
-      <div className="space-y-6 animate-fade-in">
+      <div className="flex flex-col h-[calc(100vh-80px)] space-y-6 animate-fade-in">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold tracking-tight">Employees</h1>
           <div className="flex items-center space-x-2">
@@ -107,64 +118,83 @@ const Employees = () => {
           </DropdownMenu>
         </div>
 
-        <div className="border rounded-md">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Employee</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Zone</TableHead>
-                <TableHead>Readiness</TableHead>
-                <TableHead>Performance</TableHead>
-                <TableHead>Join Date</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredEmployees.map((employee) => (
-                <TableRow key={employee.id}>
-                  <TableCell className="font-medium">
-                    <div>
-                      {employee.name}
-                      <div className="text-sm text-muted-foreground">{employee.position}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{employee.department}</TableCell>
-                  <TableCell>
-                    <Badge className={cn(getZoneBadgeClass(employee.zonePosition.zone))}>
-                      {employee.zonePosition.zone}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className={cn(getReadinessBadgeClass(employee.readiness))}>
-                      {employee.readiness}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      <div className="w-24 h-1.5 bg-gray-100 rounded-full mr-2">
-                        <div 
-                          className={`h-full rounded-full ${
-                            employee.performanceRating >= 4 ? "bg-green-500" : 
-                            employee.performanceRating >= 3 ? "bg-blue-500" : 
-                            employee.performanceRating >= 2 ? "bg-yellow-500" : "bg-red-500"
-                          }`}
-                          style={{ width: `${employee.performanceRating * 20}%` }}
-                        />
-                      </div>
-                      <span className="text-sm">{employee.performanceRating}/5</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{employee.joinDate}</TableCell>
+        <div className="flex gap-6 h-full overflow-hidden">
+          <div className="border rounded-md flex-1 overflow-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Employee</TableHead>
+                  <TableHead>Department</TableHead>
+                  <TableHead>Zone</TableHead>
+                  <TableHead>Readiness</TableHead>
+                  <TableHead>Performance</TableHead>
+                  <TableHead>Join Date</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          {filteredEmployees.length === 0 && (
-            <div className="py-8 text-center text-muted-foreground">
-              No employees found matching your search criteria.
+              </TableHeader>
+              <TableBody>
+                {filteredEmployees.map((employee) => (
+                  <TableRow 
+                    key={employee.id} 
+                    className={cn(
+                      "cursor-pointer hover:bg-muted/50",
+                      selectedEmployee?.id === employee.id && "bg-muted"
+                    )}
+                    onClick={() => setSelectedEmployee(employee)}
+                  >
+                    <TableCell className="font-medium">
+                      <div>
+                        {employee.name}
+                        <div className="text-sm text-muted-foreground">{employee.position}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell>{employee.department}</TableCell>
+                    <TableCell>
+                      <Badge className={cn(getZoneBadgeClass(employee.zonePosition.zone))}>
+                        {employee.zonePosition.zone}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className={cn(getReadinessBadgeClass(employee.readiness))}>
+                        {employee.readiness}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <div className="w-24 h-1.5 bg-gray-100 rounded-full mr-2">
+                          <div 
+                            className={`h-full rounded-full ${
+                              employee.performanceRating >= 4 ? "bg-green-500" : 
+                              employee.performanceRating >= 3 ? "bg-blue-500" : 
+                              employee.performanceRating >= 2 ? "bg-yellow-500" : "bg-red-500"
+                            }`}
+                            style={{ width: `${employee.performanceRating * 20}%` }}
+                          />
+                        </div>
+                        <span className="text-sm">{employee.performanceRating}/5</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>{employee.joinDate}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            {filteredEmployees.length === 0 && (
+              <div className="py-8 text-center text-muted-foreground">
+                No employees found matching your search criteria.
+              </div>
+            )}
+          </div>
+          
+          {selectedEmployee && (
+            <div className="w-1/3 min-w-80 max-w-md">
+              <EmployeeDetailPanel 
+                employee={selectedEmployee} 
+                onUpdateEmployee={handleUpdateEmployee}
+              />
             </div>
           )}
         </div>
+        
         <div className="text-sm text-muted-foreground">
           Showing {filteredEmployees.length} of {employees.length} employees
         </div>

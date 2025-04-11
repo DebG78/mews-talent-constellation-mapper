@@ -11,14 +11,21 @@ import { useState } from "react";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
+  onUpdateEmployee?: (updatedEmployee: Employee) => void;
 }
 
-const EmployeeDetailPanel = ({ employee: initialEmployee }: EmployeeDetailPanelProps) => {
+const EmployeeDetailPanel = ({ 
+  employee: initialEmployee, 
+  onUpdateEmployee 
+}: EmployeeDetailPanelProps) => {
   const [employee, setEmployee] = useState<Employee>(initialEmployee);
 
   // Update employee when development options change
   const handleUpdateEmployee = (updatedEmployee: Employee) => {
     setEmployee(updatedEmployee);
+    if (onUpdateEmployee) {
+      onUpdateEmployee(updatedEmployee);
+    }
   };
 
   // Get zone color
