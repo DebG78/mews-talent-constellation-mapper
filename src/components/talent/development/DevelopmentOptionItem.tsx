@@ -1,12 +1,12 @@
 
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Pencil, X, CalendarDays, Clock, Check } from "lucide-react";
+import { Pencil, X, CalendarDays, Clock, Check, Save } from "lucide-react";
 import { DevelopmentOption } from "@/types/employee";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 interface DevelopmentOptionItemProps {
