@@ -37,10 +37,16 @@ const AddDevelopmentOptionForm = ({ onAdd, onCancel }: AddDevelopmentOptionFormP
   });
   
   const handleSubmit = (values: FormValues) => {
+    // Create a valid DevelopmentOption object, ensuring all required fields are present
     const developmentOption: DevelopmentOption = {
-      id: '',
-      ...values
+      id: crypto.randomUUID(),
+      title: values.title,
+      description: values.description,
+      status: values.status,
+      // Only add dueDate if it's not an empty string
+      ...(values.dueDate ? { dueDate: values.dueDate } : {})
     };
+    
     onAdd(developmentOption);
     form.reset();
   };

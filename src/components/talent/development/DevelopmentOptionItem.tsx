@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Pencil, X, CalendarDays, Clock, Check, Save } from "lucide-react";
@@ -63,14 +63,21 @@ const DevelopmentOptionItem = ({
 
   // Handle form submission
   const handleSubmit = (data: FormValues) => {
-    onSave({
-      ...data,
-      id: option.id
-    });
+    // Create a valid DevelopmentOption object
+    const updatedOption: DevelopmentOption = {
+      id: option.id,
+      title: data.title,
+      description: data.description,
+      status: data.status,
+      // Only add dueDate if it's not an empty string
+      ...(data.dueDate ? { dueDate: data.dueDate } : {})
+    };
+    
+    onSave(updatedOption);
   };
 
   // Initialize the form when entering edit mode
-  useEffect(() => {
+  React.useEffect(() => {
     if (editingId === option.id) {
       editForm.reset({
         title: option.title,
@@ -79,7 +86,7 @@ const DevelopmentOptionItem = ({
         dueDate: option.dueDate || '',
       });
     }
-  }, [editingId, option, editForm.reset]);
+  }, [editingId, option, editForm]);
 
   return (
     <div className="border rounded-md p-2">
