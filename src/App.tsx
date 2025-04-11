@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import TalentMap from "./pages/TalentMap";
+import TalentConstellation from "./pages/TalentConstellation";
 import Employees from "./pages/Employees";
 import Reports from "./pages/Reports";
 import DataImport from "./pages/DataImport";
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/talent-map" element={<TalentMap />} />
+          <Route path="/talent-constellation" element={<TalentConstellation />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/data-import" element={<DataImport />} />

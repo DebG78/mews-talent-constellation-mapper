@@ -9,7 +9,8 @@ import {
   Menu, 
   ChevronLeft, 
   Home,
-  Network 
+  Network,
+  Star
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -53,6 +54,12 @@ export const Sidebar = () => {
             to="/talent-map"
             icon={<Network size={20} />}
             label="Talent Map"
+            collapsed={collapsed}
+          />
+          <SidebarItem
+            to="/talent-constellation"
+            icon={<Star size={20} />}
+            label="Constellation"
             collapsed={collapsed}
           />
           <SidebarItem
