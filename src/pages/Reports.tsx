@@ -16,7 +16,7 @@ import {
   XAxis, 
   YAxis 
 } from "recharts";
-import { mockEmployees } from "@/services/mockData";
+import { mockEmployees, getZoneDistribution, getReadinessDistribution, getDepartmentDistribution } from "@/services/mockData";
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink } from "lucide-react";
 
@@ -50,6 +50,31 @@ const Reports = () => {
     { month: 'Jun', Acceleration: 4.3, Development: 3.4, Support: 2.6 },
   ];
 
+  // Get data for additional charts moved from Dashboard
+  const zoneDistribution = getZoneDistribution();
+  const readinessDistribution = getReadinessDistribution();
+  const departmentDistribution = getDepartmentDistribution();
+
+  // Format data for pie chart
+  const zonePieData = [
+    { name: "Acceleration Zone", value: zoneDistribution.acceleration, color: "#0088CC" },
+    { name: "Development Zone", value: zoneDistribution.development, color: "#FFA500" },
+    { name: "Support Zone", value: zoneDistribution.support, color: "#CC0000" },
+  ];
+
+  // Format data for readiness pie chart
+  const readinessData = [
+    { name: "Ready Now", value: readinessDistribution.readyNow, color: "#22c55e" },
+    { name: "Ready Soon", value: readinessDistribution.readySoon, color: "#eab308" },
+    { name: "Not Ready", value: readinessDistribution.notReady, color: "#6b7280" },
+  ];
+
+  // Format data for department bar chart
+  const departmentBarData = Object.entries(departmentDistribution).map(([name, value]) => ({
+    name,
+    value,
+  }));
+
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
@@ -64,6 +89,90 @@ const Reports = () => {
             <Download size={16} className="mr-2" />
             Export All
           </Button>
+        </div>
+
+        {/* Distribution by Zone, Readiness, and Department (Moved from Dashboard) */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Zone Distribution</CardTitle>
+              <CardDescription>
+                Employee distribution across talent zones
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={zonePieData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                    labelLine={false}
+                  >
+                    {zonePieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Readiness</CardTitle>
+              <CardDescription>
+                Promotion readiness assessment
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={readinessData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                    labelLine={false}
+                  >
+                    {readinessData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card className="col-span-1 md:col-span-2 lg:col-span-1">
+            <CardHeader>
+              <CardTitle>Department Distribution</CardTitle>
+              <CardDescription>
+                Employees by department
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={departmentBarData} layout="vertical" margin={{ left: 20 }}>
+                  <XAxis type="number" />
+                  <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12 }} />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#0088CC" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
