@@ -100,7 +100,7 @@ const TalentMap = () => {
         </div>
 
         <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 lg:col-span-9">
+          <div className="col-span-12 lg:col-span-8">
             <Card className="overflow-hidden h-[800px]">
               <CardContent className="p-0 h-full relative">
                 <TalentMapVisualization 
@@ -115,7 +115,7 @@ const TalentMap = () => {
             </Card>
           </div>
 
-          <div className="col-span-12 lg:col-span-3 space-y-4">
+          <div className="col-span-12 lg:col-span-4 space-y-4">
             <Tabs defaultValue="filters" className="h-[800px]">
               <TabsList className="grid grid-cols-2 mb-4 w-full">
                 <TabsTrigger value="filters">Filters</TabsTrigger>
