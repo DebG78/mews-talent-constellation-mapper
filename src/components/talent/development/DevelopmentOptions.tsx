@@ -23,24 +23,33 @@ const DevelopmentOptions = ({ employee, onUpdate }: DevelopmentOptionsProps) => 
   const developmentOptions = employee.developmentOptions || [];
   
   const handleAddOption = (data: DevelopmentOption) => {
-    const newOption: DevelopmentOption = {
-      ...data,
-      id: crypto.randomUUID()
-    };
-    
-    const updatedOptions = [...developmentOptions, newOption];
-    const updatedEmployee = {
-      ...employee,
-      developmentOptions: updatedOptions
-    };
-    
-    onUpdate(updatedEmployee);
-    setIsAddingNew(false);
-    
-    toast({
-      title: "Development option added",
-      description: `${newOption.title} has been added to ${employee.name}'s development plan.`,
-    });
+    try {
+      const newOption: DevelopmentOption = {
+        ...data,
+        id: crypto.randomUUID()
+      };
+      
+      const updatedOptions = [...developmentOptions, newOption];
+      const updatedEmployee = {
+        ...employee,
+        developmentOptions: updatedOptions
+      };
+      
+      onUpdate(updatedEmployee);
+      setIsAddingNew(false);
+      
+      toast({
+        title: "Development option added",
+        description: `${newOption.title} has been added to ${employee.name}'s development plan.`,
+      });
+    } catch (err) {
+      console.error("Error adding development option:", err);
+      toast({
+        title: "Error adding option",
+        description: "There was a problem adding the development option.",
+        variant: "destructive"
+      });
+    }
   };
   
   const handleEditOption = (option: DevelopmentOption) => {
@@ -48,37 +57,64 @@ const DevelopmentOptions = ({ employee, onUpdate }: DevelopmentOptionsProps) => 
   };
   
   const handleSaveEdit = (data: DevelopmentOption) => {
-    const updatedOptions = developmentOptions.map(opt => 
-      opt.id === editingId ? { ...data, id: editingId } : opt
-    );
-    
-    const updatedEmployee = {
-      ...employee,
-      developmentOptions: updatedOptions
-    };
-    
-    onUpdate(updatedEmployee);
-    setEditingId(null);
-    
-    toast({
-      title: "Development option updated",
-      description: `${data.title} has been updated.`,
-    });
+    try {
+      const updatedOptions = developmentOptions.map(opt => 
+        opt.id === editingId ? { ...data, id: editingId } : opt
+      );
+      
+      const updatedEmployee = {
+        ...employee,
+        developmentOptions: updatedOptions
+      };
+      
+      onUpdate(updatedEmployee);
+      setEditingId(null);
+      
+      toast({
+        title: "Development option updated",
+        description: `${data.title} has been updated.`,
+      });
+    } catch (err) {
+      console.error("Error updating development option:", err);
+      toast({
+        title: "Error updating option",
+        description: "There was a problem updating the development option.",
+        variant: "destructive"
+      });
+    }
   };
   
   const handleDeleteOption = (id: string) => {
-    const updatedOptions = developmentOptions.filter(opt => opt.id !== id);
-    const updatedEmployee = {
-      ...employee,
-      developmentOptions: updatedOptions
-    };
-    
-    onUpdate(updatedEmployee);
-    
-    toast({
-      title: "Development option removed",
-      description: `The development option has been removed.`,
-    });
+    try {
+      const updatedOptions = developmentOptions.filter(opt => opt.id !== id);
+      const updatedEmployee = {
+        ...employee,
+        developmentOptions: updatedOptions
+      };
+      
+      onUpdate(updatedEmployee);
+      
+      toast({
+        title: "Development option removed",
+        description: `The development option has been removed.`,
+      });
+    } catch (err) {
+      console.error("Error deleting development option:", err);
+      toast({
+        title: "Error removing option",
+        description: "There was a problem removing the development option.",
+        variant: "destructive"
+      });
+    }
+  };
+  
+  const handleAddButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsAddingNew(true);
+    if (!isOpen) {
+      setIsOpen(true);
+    }
   };
 
   return (
@@ -95,7 +131,7 @@ const DevelopmentOptions = ({ employee, onUpdate }: DevelopmentOptionsProps) => 
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={() => setIsAddingNew(true)}
+            onClick={handleAddButtonClick}
             disabled={isAddingNew}
             className="h-7 px-2"
           >

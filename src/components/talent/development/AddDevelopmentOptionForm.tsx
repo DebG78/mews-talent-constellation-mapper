@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,19 +34,25 @@ const AddDevelopmentOptionForm = ({ onAdd, onCancel }: AddDevelopmentOptionFormP
         <FormItem className="space-y-1">
           <FormLabel className="text-xs">Title</FormLabel>
           <Input 
-            {...form.register('title')}
+            {...form.register('title', { required: true })}
             className="h-8 text-sm" 
             placeholder="Mentoring program..."
           />
+          {form.formState.errors.title && (
+            <p className="text-xs text-destructive">Title is required</p>
+          )}
         </FormItem>
         
         <FormItem className="space-y-1">
           <FormLabel className="text-xs">Description</FormLabel>
           <Textarea 
-            {...form.register('description')}
+            {...form.register('description', { required: true })}
             className="min-h-[60px] text-sm" 
             placeholder="Details about the development option..."
           />
+          {form.formState.errors.description && (
+            <p className="text-xs text-destructive">Description is required</p>
+          )}
         </FormItem>
         
         <div className="grid grid-cols-2 gap-2">
@@ -77,12 +83,25 @@ const AddDevelopmentOptionForm = ({ onAdd, onCancel }: AddDevelopmentOptionFormP
             type="button" 
             variant="outline" 
             size="sm" 
-            onClick={onCancel}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCancel();
+            }}
             className="h-8"
           >
             Cancel
           </Button>
-          <Button type="submit" size="sm" className="h-8">Save</Button>
+          <Button 
+            type="submit" 
+            size="sm" 
+            className="h-8"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            Save
+          </Button>
         </div>
       </form>
     </div>
