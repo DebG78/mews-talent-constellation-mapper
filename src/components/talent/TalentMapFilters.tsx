@@ -95,12 +95,12 @@ const TalentMapFilters = ({
         </div>
         
         <div className="flex space-x-2 pt-2">
-          <Button onClick={resetFilters} variant="outline" className="w-full">
-            <RefreshCw size={16} className="mr-2" />
+          <Button onClick={resetFilters} variant="outline" size="sm" className="w-full">
+            <RefreshCw size={16} className="mr-1" />
             Reset
           </Button>
-          <Button className="w-full">
-            <Filter size={16} className="mr-2" />
+          <Button size="sm" className="w-full">
+            <Filter size={16} className="mr-1" />
             Apply
           </Button>
         </div>
