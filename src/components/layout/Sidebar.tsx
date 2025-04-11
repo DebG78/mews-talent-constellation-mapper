@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -10,7 +9,6 @@ import {
   ChevronLeft, 
   Home,
   Network,
-  Star,
   GraduationCap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -55,12 +53,6 @@ export const Sidebar = () => {
             to="/talent-map"
             icon={<Network size={20} />}
             label="Talent Map"
-            collapsed={collapsed}
-          />
-          <SidebarItem
-            to="/talent-constellation"
-            icon={<Star size={20} />}
-            label="Constellation"
             collapsed={collapsed}
           />
           <SidebarItem
