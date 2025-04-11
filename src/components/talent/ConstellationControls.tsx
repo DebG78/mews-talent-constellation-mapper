@@ -18,9 +18,9 @@ const ConstellationControls = ({ zoom, setZoom }: ConstellationControlsProps) =>
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      <Button variant="outline" size="sm" onClick={handleZoomOut}>
-        <ZoomOut size={16} />
+    <div className="flex items-center space-x-2 bg-white p-2 rounded-full shadow-sm border border-gray-200">
+      <Button variant="ghost" size="icon" onClick={handleZoomOut} className="rounded-full h-8 w-8">
+        <ZoomOut size={16} className="text-mews-navy" />
       </Button>
       <Slider 
         value={[zoom]} 
@@ -30,8 +30,8 @@ const ConstellationControls = ({ zoom, setZoom }: ConstellationControlsProps) =>
         onValueChange={(value) => setZoom(value[0])}
         className="w-24" 
       />
-      <Button variant="outline" size="sm" onClick={handleZoomIn}>
-        <ZoomIn size={16} />
+      <Button variant="ghost" size="icon" onClick={handleZoomIn} className="rounded-full h-8 w-8">
+        <ZoomIn size={16} className="text-mews-navy" />
       </Button>
     </div>
   );

@@ -30,7 +30,7 @@ export const Sidebar = () => {
     >
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         {!collapsed && (
-          <h1 className="text-xl font-bold text-acceleration">
+          <h1 className="text-xl font-bold text-mews-navy">
             Mews Talent Acceleration
           </h1>
         )}
@@ -108,10 +108,10 @@ const SidebarItem = ({ to, icon, label, collapsed }: SidebarItemProps) => {
       <Link
         to={to}
         className={cn(
-          "flex items-center px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors",
+          "flex items-center px-4 py-2 rounded-md text-mews-navy hover:bg-mews-light-blue transition-colors",
           {
             "justify-center": collapsed,
-            "hover:text-acceleration": true,
+            "hover:text-mews-coral": true,
           }
         )}
       >

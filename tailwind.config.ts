@@ -63,6 +63,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Updated Mews colors
+				"mews-coral": "#ff5e64",
+				"mews-navy": "#1e2d3d",
+				"mews-gray": "#f5f6f7",
+				"mews-dark-gray": "#8E9196",
+				"mews-light-blue": "#f0f5fa",
 				// Custom zone colors
 				"acceleration": "#0088CC",
 				"development": "#FFA500",
