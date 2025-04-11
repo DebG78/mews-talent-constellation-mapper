@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getZoneDistribution, getReadinessDistribution, getDepartmentDistribution } from "@/services/mockData";
 import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Network, Users, BarChart2 } from "lucide-react";
+import TalentFrameworkExplainer from "@/components/talent/TalentFrameworkExplainer";
 
 const Dashboard = () => {
   const zoneDistribution = getZoneDistribution();
@@ -60,6 +61,9 @@ const Dashboard = () => {
             icon={<BarChart2 className="h-5 w-5 text-ready-now" />}
           />
         </div>
+
+        {/* Talent Framework Explainer */}
+        <TalentFrameworkExplainer />
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="col-span-1">

@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,12 +9,18 @@ import {
 } from "@/components/ui/tabs";
 import { Employee, Readiness, Zone } from "@/types/employee";
 import { mockEmployees } from "@/services/mockData";
-import { User } from "lucide-react";
+import { HelpCircle, User } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import EmployeeDetailPanel from "@/components/talent/EmployeeDetailPanel";
 import TalentMapControls from "@/components/talent/TalentMapControls";
 import TalentMapFilters from "@/components/talent/TalentMapFilters";
 import TalentMapVisualization from "@/components/talent/TalentMapVisualization";
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const TalentMap = () => {
   const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
@@ -34,7 +39,6 @@ const TalentMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  // Filter employees based on current filter settings
   const filteredEmployees = employees.filter(emp => {
     if (filter.department !== 'All' && emp.department !== filter.department) return false;
     if (filter.zone !== 'All' && emp.zonePosition.zone !== filter.zone) return false;
@@ -42,7 +46,6 @@ const TalentMap = () => {
     return true;
   });
 
-  // Handle zoom controls
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));
   };
@@ -51,7 +54,6 @@ const TalentMap = () => {
     setZoom(prev => Math.max(prev - 0.2, 0.5));
   };
 
-  // Reset all filters
   const resetFilters = () => {
     setFilter({
       department: 'All',
@@ -64,7 +66,6 @@ const TalentMap = () => {
     });
   };
 
-  // Handle employee selection
   const handleEmployeeClick = (employee: Employee) => {
     setSelectedEmployee(employee);
   };
@@ -73,7 +74,22 @@ const TalentMap = () => {
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold tracking-tight">Talent Map</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-bold tracking-tight">Talent Map</h1>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <HelpCircle className="h-5 w-5 text-muted-foreground cursor-help" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm">
+                <p className="text-sm">
+                  The Talent Map visualizes employees across zones (Acceleration, Development, Support) 
+                  and readiness levels (Ready Now, Ready Soon, Not Ready). These are separate but 
+                  related concepts - an employee in the Acceleration zone might still be "Not Ready" 
+                  for promotion if they need more experience.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
           <TalentMapControls 
             zoom={zoom} 
             setZoom={setZoom} 
@@ -83,7 +99,6 @@ const TalentMap = () => {
         </div>
 
         <div className="grid grid-cols-12 gap-6">
-          {/* Main visualization area */}
           <div className="col-span-12 lg:col-span-9">
             <Card className="overflow-hidden h-[800px]">
               <CardContent className="p-0 h-full relative">
@@ -99,7 +114,6 @@ const TalentMap = () => {
             </Card>
           </div>
 
-          {/* Control panel sidebar */}
           <div className="col-span-12 lg:col-span-3 space-y-4">
             <Tabs defaultValue="filters">
               <TabsList className="grid grid-cols-2 mb-4 w-full">
