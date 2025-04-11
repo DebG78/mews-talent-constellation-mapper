@@ -1,9 +1,10 @@
 
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Employee } from "@/types/employee";
-import { CalendarDays, User, Building, BarChart, Gauge } from "lucide-react";
+import EmployeeBasicInfo from "./EmployeeBasicInfo";
+import PerformanceRating from "./PerformanceRating";
+import SkillEnablersSection from "./SkillEnablersSection";
+import DevelopmentSuggestions from "./DevelopmentSuggestions";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
@@ -44,125 +45,19 @@ const EmployeeDetailPanel = ({ employee }: EmployeeDetailPanelProps) => {
         <CardTitle>{employee.name}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex flex-col space-y-3">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center text-sm text-muted-foreground">
-              <User size={14} className="mr-1" />
-              {employee.position}
-            </div>
-            <Badge variant="outline" className={getZoneColor(employee.zonePosition.zone)}>
-              {employee.zonePosition.zone} Zone
-            </Badge>
-          </div>
-          
-          <div className="flex justify-between items-center">
-            <div className="flex items-center text-sm text-muted-foreground">
-              <Building size={14} className="mr-1" />
-              {employee.department}
-            </div>
-            <Badge variant="outline" className={getReadinessColor(employee.readiness)}>
-              {employee.readiness}
-            </Badge>
-          </div>
-          
-          <div className="flex items-center text-sm text-muted-foreground">
-            <CalendarDays size={14} className="mr-1" />
-            Joined: {employee.joinDate}
-          </div>
-        </div>
+        <EmployeeBasicInfo 
+          employee={employee} 
+          getZoneColor={getZoneColor} 
+          getReadinessColor={getReadinessColor} 
+        />
 
-        <div className="pt-2">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium flex items-center">
-              <BarChart size={14} className="mr-1" />
-              Performance Rating
-            </span>
-            <span className="text-sm font-semibold">{employee.performanceRating}/5</span>
-          </div>
-          <Progress value={employee.performanceRating * 20} className="h-2" />
-        </div>
+        <PerformanceRating rating={employee.performanceRating} />
 
-        <div className="space-y-4 pt-2">
-          <h4 className="text-sm font-medium flex items-center">
-            <Gauge size={14} className="mr-1" />
-            Skill Enablers
-          </h4>
-          
-          <div className="space-y-3">
-            <SkillEnablerBar 
-              label="Drive" 
-              value={employee.skillEnablers.drive} 
-              color="bg-blue-500" 
-            />
-            <SkillEnablerBar 
-              label="Learning Agility" 
-              value={employee.skillEnablers.learningAgility} 
-              color="bg-green-500" 
-            />
-            <SkillEnablerBar 
-              label="Innovation" 
-              value={employee.skillEnablers.innovation} 
-              color="bg-purple-500" 
-            />
-            <SkillEnablerBar 
-              label="Adaptability" 
-              value={employee.skillEnablers.adaptability} 
-              color="bg-orange-500" 
-            />
-          </div>
-        </div>
+        <SkillEnablersSection skillEnablers={employee.skillEnablers} />
 
-        <div className="pt-2 space-y-2">
-          <h4 className="text-sm font-medium">Development Suggestions</h4>
-          {employee.zonePosition.zone === 'Acceleration' && (
-            <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-4">
-              <li>Leadership mentoring program</li>
-              <li>Cross-functional project leadership</li>
-              <li>Executive shadowing opportunity</li>
-            </ul>
-          )}
-          
-          {employee.zonePosition.zone === 'Development' && (
-            <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-4">
-              <li>Stretch assignments in current role</li>
-              <li>Targeted skill development workshops</li>
-              <li>Peer learning groups</li>
-            </ul>
-          )}
-          
-          {employee.zonePosition.zone === 'Support' && (
-            <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-4">
-              <li>Performance improvement plan</li>
-              <li>Core skills training</li>
-              <li>Regular coaching sessions</li>
-            </ul>
-          )}
-        </div>
+        <DevelopmentSuggestions zone={employee.zonePosition.zone} />
       </CardContent>
     </Card>
-  );
-};
-
-interface SkillEnablerBarProps {
-  label: string;
-  value: number;
-  color: string;
-}
-
-const SkillEnablerBar = ({ label, value, color }: SkillEnablerBarProps) => {
-  return (
-    <div className="space-y-1">
-      <div className="flex justify-between text-xs">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-medium">{value}/5</span>
-      </div>
-      <div className="h-1.5 bg-gray-100 rounded-full">
-        <div 
-          className={`h-full rounded-full ${color}`} 
-          style={{ width: `${value * 20}%` }}
-        />
-      </div>
-    </div>
   );
 };
 
