@@ -5,13 +5,22 @@ import EmployeeBasicInfo from "./EmployeeBasicInfo";
 import PerformanceRating from "./PerformanceRating";
 import SkillEnablersSection from "./SkillEnablersSection";
 import DevelopmentSuggestions from "./DevelopmentSuggestions";
+import DevelopmentOptions from "./DevelopmentOptions";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from "react";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
 }
 
-const EmployeeDetailPanel = ({ employee }: EmployeeDetailPanelProps) => {
+const EmployeeDetailPanel = ({ employee: initialEmployee }: EmployeeDetailPanelProps) => {
+  const [employee, setEmployee] = useState<Employee>(initialEmployee);
+
+  // Update employee when development options change
+  const handleUpdateEmployee = (updatedEmployee: Employee) => {
+    setEmployee(updatedEmployee);
+  };
+
   // Get zone color
   const getZoneColor = (zone: string) => {
     switch (zone) {
@@ -56,6 +65,11 @@ const EmployeeDetailPanel = ({ employee }: EmployeeDetailPanelProps) => {
           <PerformanceRating rating={employee.performanceRating} />
 
           <SkillEnablersSection skillEnablers={employee.skillEnablers} />
+
+          <DevelopmentOptions 
+            employee={employee}
+            onUpdate={handleUpdateEmployee}
+          />
 
           <DevelopmentSuggestions zone={employee.zonePosition.zone} />
         </CardContent>

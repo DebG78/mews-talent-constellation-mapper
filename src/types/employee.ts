@@ -9,6 +9,15 @@ export interface Employee {
   skillEnablers: SkillEnablers;
   zonePosition: ZonePosition;
   joinDate: string;
+  developmentOptions?: DevelopmentOption[];
+}
+
+export interface DevelopmentOption {
+  id: string;
+  title: string;
+  description: string;
+  status: 'Planned' | 'In Progress' | 'Completed';
+  dueDate?: string;
 }
 
 export interface SkillEnablers {
