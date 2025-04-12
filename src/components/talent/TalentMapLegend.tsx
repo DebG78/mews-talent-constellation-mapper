@@ -17,7 +17,7 @@ const TalentMapLegend = () => {
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-development mr-2"></div>
-                <span className="text-xs">Development Zone</span>
+                <span className="text-xs">Growth Zone</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-support mr-2"></div>

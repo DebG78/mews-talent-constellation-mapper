@@ -46,7 +46,7 @@ const TalentFrameworkExplainer = () => {
                 </p>
               </div>
               <div className="bg-amber-50 p-3 rounded-md border-l-4 border-development">
-                <h3 className="text-sm font-semibold text-development">Development Zone</h3>
+                <h3 className="text-sm font-semibold text-development">Growth Zone</h3>
                 <p className="text-xs mt-1">
                   Solid performers who benefit from targeted development to enhance specific
                   skills or competencies.
@@ -96,7 +96,7 @@ const TalentFrameworkExplainer = () => {
             <div className="text-xs text-muted-foreground">
               <p className="font-medium">The Zone-Readiness Relationship:</p>
               <p>
-                Zones (Acceleration, Development, Support) indicate performance and potential, 
+                Zones (Acceleration, Growth, Support) indicate performance and potential, 
                 while Readiness (Ready Now, Ready Soon, Not Ready) indicates promotion 
                 timeline. These are separate but related concepts - high performers may still 
                 need time before promotion.

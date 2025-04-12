@@ -13,7 +13,7 @@ const Reports = () => {
   // Generate zone distribution data for pie chart
   const zoneData = [
     { name: 'Acceleration', value: mockEmployees.filter(e => e.zonePosition.zone === 'Acceleration').length, color: '#0088CC' },
-    { name: 'Development', value: mockEmployees.filter(e => e.zonePosition.zone === 'Development').length, color: '#FFA500' },
+    { name: 'Growth', value: mockEmployees.filter(e => e.zonePosition.zone === 'Growth').length, color: '#FFA500' },
     { name: 'Support', value: mockEmployees.filter(e => e.zonePosition.zone === 'Support').length, color: '#CC0000' },
   ];
 
@@ -24,19 +24,19 @@ const Reports = () => {
     return {
       name: dept,
       Acceleration: empInDept.filter(e => e.zonePosition.zone === 'Acceleration').length,
-      Development: empInDept.filter(e => e.zonePosition.zone === 'Development').length,
+      Growth: empInDept.filter(e => e.zonePosition.zone === 'Growth').length,
       Support: empInDept.filter(e => e.zonePosition.zone === 'Support').length,
     };
   });
 
   // Generate performance trend data (simulated historical data)
   const performanceTrendData = [
-    { month: 'Jan', Acceleration: 3.8, Development: 3.2, Support: 2.5 },
-    { month: 'Feb', Acceleration: 3.9, Development: 3.3, Support: 2.4 },
-    { month: 'Mar', Acceleration: 4.0, Development: 3.2, Support: 2.3 },
-    { month: 'Apr', Acceleration: 4.1, Development: 3.3, Support: 2.4 },
-    { month: 'May', Acceleration: 4.2, Development: 3.5, Support: 2.5 },
-    { month: 'Jun', Acceleration: 4.3, Development: 3.4, Support: 2.6 },
+    { month: 'Jan', Acceleration: 3.8, Growth: 3.2, Support: 2.5 },
+    { month: 'Feb', Acceleration: 3.9, Growth: 3.3, Support: 2.4 },
+    { month: 'Mar', Acceleration: 4.0, Growth: 3.2, Support: 2.3 },
+    { month: 'Apr', Acceleration: 4.1, Growth: 3.3, Support: 2.4 },
+    { month: 'May', Acceleration: 4.2, Growth: 3.5, Support: 2.5 },
+    { month: 'Jun', Acceleration: 4.3, Growth: 3.4, Support: 2.6 },
   ];
 
   // Get data for additional charts moved from Dashboard
@@ -47,7 +47,7 @@ const Reports = () => {
   // Format data for pie chart
   const zonePieData = [
     { name: "Acceleration Zone", value: zoneDistribution.acceleration, color: "#0088CC" },
-    { name: "Development Zone", value: zoneDistribution.development, color: "#FFA500" },
+    { name: "Growth Zone", value: zoneDistribution.growth, color: "#FFA500" },
     { name: "Support Zone", value: zoneDistribution.support, color: "#CC0000" },
   ];
 

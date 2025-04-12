@@ -17,7 +17,7 @@ const DevelopmentSuggestions = ({ zone }: DevelopmentSuggestionsProps) => {
         </ul>
       )}
       
-      {zone === 'Development' && (
+      {zone === 'Growth' && (
         <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-4">
           <li>Stretch assignments in current role</li>
           <li>Targeted skill development workshops</li>

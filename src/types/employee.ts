@@ -31,9 +31,9 @@ export interface SkillEnablers {
 export interface ZonePosition {
   x: number;
   y: number;
-  zone: 'Acceleration' | 'Development' | 'Support';
+  zone: 'Acceleration' | 'Growth' | 'Support';
 }
 
-export type Zone = 'Acceleration' | 'Development' | 'Support';
+export type Zone = 'Acceleration' | 'Growth' | 'Support';
 export type Readiness = 'Ready Now' | 'Ready Soon' | 'Not Ready';
 export type JobGrade = 'IC' | 'Manager' | 'All';

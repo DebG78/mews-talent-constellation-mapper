@@ -38,7 +38,7 @@ const TalentMapVisualization = ({
       
       {/* Zone labels */}
       <div className="absolute top-6 right-6 text-lg font-semibold text-acceleration">Acceleration Zone</div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-development">Development Zone</div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-development">Growth Zone</div>
       <div className="absolute bottom-6 left-6 text-lg font-semibold text-support">Support Zone</div>
       
       {/* Employees visualization */}
@@ -60,7 +60,7 @@ const TalentMapVisualization = ({
               style={{ 
                 backgroundColor: employee.zonePosition.zone === 'Acceleration' 
                   ? '#0088CC' 
-                  : employee.zonePosition.zone === 'Development' 
+                  : employee.zonePosition.zone === 'Growth' 
                     ? '#FFA500' 
                     : '#CC0000',
                 border: selectedEmployee?.id === employee.id ? '2px solid white' : '2px solid transparent',

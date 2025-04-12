@@ -76,7 +76,7 @@ const TalentMapFilters = ({
             <SelectContent>
               <SelectItem value="All">All Zones</SelectItem>
               <SelectItem value="Acceleration">Acceleration Zone</SelectItem>
-              <SelectItem value="Development">Development Zone</SelectItem>
+              <SelectItem value="Growth">Growth Zone</SelectItem>
               <SelectItem value="Support">Support Zone</SelectItem>
             </SelectContent>
           </Select>

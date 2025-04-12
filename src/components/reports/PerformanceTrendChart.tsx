@@ -1,72 +1,55 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  LineChart, 
-  Line, 
-  ResponsiveContainer, 
-  XAxis, 
-  YAxis, 
-  Tooltip, 
-  Legend, 
-  CartesianGrid 
-} from "recharts";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
 
-interface PerformanceTrendProps {
+interface PerformanceTrendChartProps {
   data: {
     month: string;
     Acceleration: number;
-    Development: number;
+    Growth: number;
     Support: number;
   }[];
 }
 
-const PerformanceTrendChart = ({ data }: PerformanceTrendProps) => {
+const PerformanceTrendChart = ({ data }: PerformanceTrendChartProps) => {
   return (
-    <Card className="col-span-1 md:col-span-3">
-      <CardHeader className="flex flex-row items-start justify-between">
-        <div>
-          <CardTitle>Performance Trends</CardTitle>
-          <CardDescription>
-            Average performance rating by zone over time
-          </CardDescription>
-        </div>
-        <Button variant="ghost" size="icon">
-          <ExternalLink size={16} />
-        </Button>
+    <Card className="col-span-1">
+      <CardHeader>
+        <CardTitle>Performance Trends</CardTitle>
+        <CardDescription>
+          Average performance by zone
+        </CardDescription>
       </CardHeader>
       <CardContent className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
+          <LineChart data={data} margin={{ left: 20 }}>
             <XAxis dataKey="month" />
-            <YAxis domain={[0, 5]} />
+            <YAxis domain={[0, 5]} ticks={[0, 1, 2, 3, 4, 5]} />
             <Tooltip />
             <Legend />
             <Line 
               type="monotone" 
               dataKey="Acceleration" 
+              name="Acceleration Zone" 
               stroke="#0088CC" 
               strokeWidth={2} 
               dot={{ r: 4 }} 
-              activeDot={{ r: 6 }} 
             />
             <Line 
               type="monotone" 
-              dataKey="Development" 
+              dataKey="Growth" 
+              name="Growth Zone" 
               stroke="#FFA500" 
               strokeWidth={2} 
               dot={{ r: 4 }} 
-              activeDot={{ r: 6 }} 
             />
             <Line 
               type="monotone" 
               dataKey="Support" 
+              name="Support Zone" 
               stroke="#CC0000" 
               strokeWidth={2} 
               dot={{ r: 4 }} 
-              activeDot={{ r: 6 }} 
             />
           </LineChart>
         </ResponsiveContainer>

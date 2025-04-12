@@ -7,16 +7,16 @@ const randomBetween = (min: number, max: number) => {
 };
 
 // Determine zone based on performance rating and skill enablers
-const determineZone = (performanceRating: number, enablersAvg: number): 'Acceleration' | 'Development' | 'Support' => {
+const determineZone = (performanceRating: number, enablersAvg: number): 'Acceleration' | 'Growth' | 'Support' => {
   const score = performanceRating * 0.7 + enablersAvg * 0.3;
   
   if (score >= 4) return 'Acceleration';
-  if (score >= 2.5) return 'Development';
+  if (score >= 2.5) return 'Growth';
   return 'Support';
 };
 
 // Determine random position within a zone
-const determinePosition = (zone: 'Acceleration' | 'Development' | 'Support') => {
+const determinePosition = (zone: 'Acceleration' | 'Growth' | 'Support') => {
   let x, y;
   
   // Different positioning logic for each zone
@@ -26,7 +26,7 @@ const determinePosition = (zone: 'Acceleration' | 'Development' | 'Support') => 
       x = randomBetween(50, 95);
       y = randomBetween(5, 50);
       break;
-    case 'Development':
+    case 'Growth':
       // Middle area
       x = randomBetween(25, 75);
       y = randomBetween(25, 75);
@@ -97,19 +97,19 @@ export const generateMockEmployees = (count: number = 50): Employee[] => {
 export const mockEmployees = generateMockEmployees(50);
 
 // Get employees by zone
-export const getEmployeesByZone = (zone: 'Acceleration' | 'Development' | 'Support'): Employee[] => {
+export const getEmployeesByZone = (zone: 'Acceleration' | 'Growth' | 'Support'): Employee[] => {
   return mockEmployees.filter(emp => emp.zonePosition.zone === zone);
 };
 
 // Get employee distribution by zone
 export const getZoneDistribution = () => {
   const acceleration = mockEmployees.filter(emp => emp.zonePosition.zone === 'Acceleration').length;
-  const development = mockEmployees.filter(emp => emp.zonePosition.zone === 'Development').length;
+  const growth = mockEmployees.filter(emp => emp.zonePosition.zone === 'Growth').length;
   const support = mockEmployees.filter(emp => emp.zonePosition.zone === 'Support').length;
   
   return {
     acceleration,
-    development,
+    growth,
     support,
     total: mockEmployees.length
   };
