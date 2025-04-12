@@ -4,6 +4,12 @@ import { Employee } from "@/types/employee";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface EmployeeSkillTableProps {
   employees: Employee[];
@@ -22,6 +28,22 @@ const EmployeeSkillTable = ({ employees, onSelectEmployee, selectedEmployeeId }:
   const getAverageSkillScore = (employee: Employee): number => {
     const { drive, learningAgility, innovation, adaptability } = employee.skillEnablers;
     return (drive + learningAgility + innovation + adaptability) / 4;
+  };
+
+  // Function to get the rating label
+  const getRatingLabel = (rating: number) => {
+    if (rating >= 5) return "Sets a New Standard";
+    if (rating >= 4) return "Often Exceeds Expectations";
+    if (rating >= 3) return "Consistently Meets Expectations";
+    return "Needs Development";
+  };
+
+  // Function to get rating color
+  const getRatingColor = (rating: number) => {
+    if (rating >= 5) return "bg-purple-600";
+    if (rating >= 4) return "bg-blue-600";
+    if (rating >= 3) return "bg-green-600";
+    return "bg-amber-600";
   };
 
   return (
@@ -59,20 +81,27 @@ const EmployeeSkillTable = ({ employees, onSelectEmployee, selectedEmployeeId }:
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className="flex items-center">
-                    <div className="w-16 h-1.5 bg-gray-100 rounded-full mr-2">
-                      <div 
-                        className={cn(
-                          "h-full rounded-full",
-                          employee.performanceRating >= 4 ? "bg-green-500" : 
-                          employee.performanceRating >= 3 ? "bg-blue-500" : 
-                          employee.performanceRating >= 2 ? "bg-yellow-500" : "bg-red-500"
-                        )}
-                        style={{ width: `${employee.performanceRating * 20}%` }}
-                      />
-                    </div>
-                    <span className="text-sm">{employee.performanceRating}/5</span>
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center cursor-help">
+                          <div className="w-16 h-1.5 bg-gray-100 rounded-full mr-2">
+                            <div 
+                              className={cn(
+                                "h-full rounded-full",
+                                getRatingColor(employee.performanceRating)
+                              )}
+                              style={{ width: `${employee.performanceRating * 20}%` }}
+                            />
+                          </div>
+                          <span className="text-sm">{employee.performanceRating}/5</span>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="max-w-xs p-2">
+                        <p className="text-sm font-medium">{getRatingLabel(employee.performanceRating)}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center">

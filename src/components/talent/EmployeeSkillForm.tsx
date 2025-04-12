@@ -25,6 +25,12 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { SkillRating } from "./SkillRating";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface EmployeeSkillFormProps {
   employee: Employee;
@@ -66,6 +72,36 @@ const EmployeeSkillForm = ({ employee, onSubmit, onCancel }: EmployeeSkillFormPr
       .substring(0, 2);
   };
 
+  // Function to get the rating label
+  const getRatingLabel = (rating: number) => {
+    if (rating >= 5) return "Sets a New Standard";
+    if (rating >= 4) return "Often Exceeds Expectations";
+    if (rating >= 3) return "Consistently Meets Expectations";
+    return "Needs Development";
+  };
+
+  // Function to get the rating description
+  const getRatingDescription = (rating: number) => {
+    if (rating >= 5) {
+      return "Consistently delivers industry-leading work, adds significant business value, and elevates others.";
+    }
+    if (rating >= 4) {
+      return "High performer who exceeds goals, takes on additional responsibilities, and goes the extra mile.";
+    }
+    if (rating >= 3) {
+      return "Delivers expected results with good quality and collaborates effectively.";
+    }
+    return "Performance is inconsistent, may struggle with meeting standards consistently.";
+  };
+
+  // Function to determine color based on rating
+  const getRatingColor = (rating: number) => {
+    if (rating >= 5) return "bg-purple-600 text-white";
+    if (rating >= 4) return "bg-blue-600 text-white";
+    if (rating >= 3) return "bg-green-600 text-white";
+    return "bg-amber-600 text-white";
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-4 mb-4">
@@ -83,13 +119,37 @@ const EmployeeSkillForm = ({ employee, onSubmit, onCancel }: EmployeeSkillFormPr
       <Separator />
       
       <div className="mb-4">
-        <div className="flex items-center mb-2">
-          <Star className="h-4 w-4 text-yellow-500 mr-2" />
-          <span className="font-medium">Performance Rating: {employee.performanceRating}/5</span>
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex items-center mb-2 cursor-help">
+                <Star className="h-4 w-4 text-yellow-500 mr-2" />
+                <span className="font-medium">
+                  Performance Rating: {employee.performanceRating}/5
+                </span>
+                <span className="ml-2 text-sm text-muted-foreground">
+                  ({getRatingLabel(employee.performanceRating)})
+                </span>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="max-w-xs">
+              <div className="space-y-2">
+                <p className="text-sm font-medium">{getRatingLabel(employee.performanceRating)}</p>
+                <p className="text-xs">{getRatingDescription(employee.performanceRating)}</p>
+                <div className={`text-xs p-1.5 rounded ${getRatingColor(employee.performanceRating)}`}>
+                  {employee.performanceRating}/5
+                </div>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <div className="w-full h-2 bg-gray-100 rounded-full">
           <div 
-            className="h-full rounded-full bg-yellow-500" 
+            className={`h-full rounded-full ${
+              employee.performanceRating >= 5 ? "bg-purple-600" : 
+              employee.performanceRating >= 4 ? "bg-blue-600" : 
+              employee.performanceRating >= 3 ? "bg-green-600" : "bg-amber-600"
+            }`}
             style={{ width: `${employee.performanceRating * 20}%` }}
           />
         </div>
