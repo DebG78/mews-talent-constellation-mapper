@@ -7,7 +7,7 @@ import SkillEnablersSection from "./SkillEnablersSection";
 import DevelopmentSuggestions from "./DevelopmentSuggestions";
 import DevelopmentOptions from "./development/DevelopmentOptions";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
@@ -19,6 +19,11 @@ const EmployeeDetailPanel = ({
   onUpdateEmployee 
 }: EmployeeDetailPanelProps) => {
   const [employee, setEmployee] = useState<Employee>(initialEmployee);
+  
+  // Update local state when prop changes
+  useEffect(() => {
+    setEmployee(initialEmployee);
+  }, [initialEmployee]);
 
   // Update employee when development options change
   const handleUpdateEmployee = (updatedEmployee: Employee) => {
@@ -33,7 +38,7 @@ const EmployeeDetailPanel = ({
     switch (zone) {
       case 'Acceleration':
         return 'bg-acceleration text-white';
-      case 'Development':
+      case 'Growth':
         return 'bg-development text-white';
       case 'Support':
         return 'bg-support text-white';
