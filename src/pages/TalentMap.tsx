@@ -23,6 +23,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const TalentMap = () => {
   const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
@@ -41,6 +42,7 @@ const TalentMap = () => {
     jobGrade: 'All',
   });
   
+  const isMobile = useIsMobile();
   const mapRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -85,25 +87,29 @@ const TalentMap = () => {
     setIsPanelVisible(!isPanelVisible);
   };
 
+  const mapHeight = isMobile ? "600px" : "calc(100vh - 180px)";
+
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-bold tracking-tight">Talent Map</h1>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="h-5 w-5 text-muted-foreground cursor-help" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-sm">
-                <p className="text-sm">
-                  The Talent Map visualizes employees across zones (Acceleration, Development, Support) 
-                  and readiness levels (Ready Now, Ready Soon, Not Ready). These are separate but 
-                  related concepts - an employee in the Acceleration zone might still be "Not Ready" 
-                  for promotion if they need more experience.
-                </p>
-              </TooltipContent>
-            </Tooltip>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <HelpCircle className="h-5 w-5 text-muted-foreground cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-sm">
+                  <p className="text-sm">
+                    The Talent Map visualizes employees across zones (Acceleration, Growth, Support) 
+                    and readiness levels (Ready Now, Ready Soon, Not Ready). These are separate but 
+                    related concepts - an employee in the Acceleration zone might still be "Not Ready" 
+                    for promotion if they need more experience.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <div className="flex items-center gap-2">
             <Button 
@@ -135,7 +141,7 @@ const TalentMap = () => {
 
         <div className="grid grid-cols-12 gap-6">
           <div className={`col-span-12 ${isPanelVisible ? 'lg:col-span-8' : 'lg:col-span-12'} transition-all duration-300`}>
-            <Card className="overflow-hidden h-[800px]">
+            <Card className="overflow-hidden" style={{ height: mapHeight }}>
               <CardContent className="p-0 h-full relative">
                 <TalentMapVisualization 
                   mapRef={mapRef}
@@ -151,13 +157,13 @@ const TalentMap = () => {
 
           {isPanelVisible && (
             <div className="col-span-12 lg:col-span-4 space-y-4 transition-all duration-300">
-              <Tabs defaultValue="filters" className="h-[800px]">
+              <Tabs defaultValue="filters" style={{ height: mapHeight }}>
                 <TabsList className="grid grid-cols-2 mb-4 w-full">
                   <TabsTrigger value="filters">Filters</TabsTrigger>
                   <TabsTrigger value="details">Details</TabsTrigger>
                 </TabsList>
                 
-                <TabsContent value="filters" className="mt-0 h-[calc(800px-48px)]">
+                <TabsContent value="filters" className="mt-0" style={{ height: `calc(${mapHeight} - 48px)` }}>
                   <TalentMapFilters 
                     employees={employees}
                     filter={filter}
@@ -171,14 +177,14 @@ const TalentMap = () => {
                   </div>
                 </TabsContent>
                 
-                <TabsContent value="details" className="mt-0 h-[calc(800px-48px)] overflow-hidden">
+                <TabsContent value="details" className="mt-0 overflow-hidden" style={{ height: `calc(${mapHeight} - 48px)` }}>
                   {selectedEmployee ? (
                     <EmployeeDetailPanel employee={selectedEmployee} />
                   ) : (
                     <Card>
-                      <CardContent className="pt-6 flex flex-col items-center justify-center py-8 text-center text-muted-foreground">
-                        <User size={64} className="mb-4 opacity-20" />
-                        <p>Select an employee on the map to view their details</p>
+                      <CardContent className="pt-6 flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+                        <User size={80} className="mb-6 opacity-20" />
+                        <p className="text-lg">Select an employee on the map to view their details</p>
                       </CardContent>
                     </Card>
                   )}
