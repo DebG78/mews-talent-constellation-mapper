@@ -42,6 +42,9 @@ const TalentMap = () => {
     jobGrade: 'All',
   });
   
+  // Added to track the active tab
+  const [activeTab, setActiveTab] = useState<string>("filters");
+  
   const isMobile = useIsMobile();
   const mapRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -77,6 +80,8 @@ const TalentMap = () => {
 
   const handleEmployeeClick = (employee: Employee) => {
     setSelectedEmployee(employee);
+    // Switch to the "details" tab when an employee is selected
+    setActiveTab("details");
     // If panel is hidden and an employee is selected, show the panel
     if (!isPanelVisible) {
       setIsPanelVisible(true);
@@ -88,6 +93,16 @@ const TalentMap = () => {
   };
 
   const mapHeight = isMobile ? "600px" : "calc(100vh - 180px)";
+
+  // Function to handle employee updates
+  const handleUpdateEmployee = (updatedEmployee: Employee) => {
+    setEmployees(prevEmployees => 
+      prevEmployees.map(emp => 
+        emp.id === updatedEmployee.id ? updatedEmployee : emp
+      )
+    );
+    setSelectedEmployee(updatedEmployee);
+  };
 
   return (
     <MainLayout>
@@ -157,7 +172,7 @@ const TalentMap = () => {
 
           {isPanelVisible && (
             <div className="col-span-12 lg:col-span-4 space-y-4 transition-all duration-300">
-              <Tabs defaultValue="filters" style={{ height: mapHeight }}>
+              <Tabs value={activeTab} onValueChange={setActiveTab} style={{ height: mapHeight }}>
                 <TabsList className="grid grid-cols-2 mb-4 w-full">
                   <TabsTrigger value="filters">Filters</TabsTrigger>
                   <TabsTrigger value="details">Details</TabsTrigger>
@@ -179,7 +194,10 @@ const TalentMap = () => {
                 
                 <TabsContent value="details" className="mt-0 overflow-hidden" style={{ height: `calc(${mapHeight} - 48px)` }}>
                   {selectedEmployee ? (
-                    <EmployeeDetailPanel employee={selectedEmployee} />
+                    <EmployeeDetailPanel 
+                      employee={selectedEmployee} 
+                      onUpdateEmployee={handleUpdateEmployee} 
+                    />
                   ) : (
                     <Card>
                       <CardContent className="pt-6 flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
