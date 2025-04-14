@@ -12,9 +12,9 @@ const Dashboard = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        <h1 className="text-3xl font-bold tracking-tight">Talent Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Talent Insights Dashboard</h1>
         <p className="text-muted-foreground">
-          Overview of your organization's talent distribution and readiness.
+          Comprehensive overview of your organization's talent distribution, zones, and readiness.
         </p>
 
         <div className="grid gap-6 md:grid-cols-3">
