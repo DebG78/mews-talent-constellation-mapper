@@ -2,7 +2,7 @@
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getZoneDistribution, getReadinessDistribution } from "@/services/mockData";
-import { Network, Users, BarChart2 } from "lucide-react";
+import { Network, Users, BarChart2, Gauge } from "lucide-react";
 import TalentFrameworkExplainer from "@/components/talent/TalentFrameworkExplainer";
 
 const Dashboard = () => {
@@ -39,6 +39,33 @@ const Dashboard = () => {
             icon={<BarChart2 className="h-5 w-5 text-ready-now" />}
           />
         </div>
+
+        {/* How We Assess Talent Card */}
+        <Card className="mb-4">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center">
+              <Gauge className="h-5 w-5 mr-2" /> How We Assess Talent
+            </CardTitle>
+            <CardDescription>
+              Our talent framework uses a combination of factors to place employees in talent zones
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm">
+            <p className="mb-3">
+              We use a data-driven approach to assess talent and determine appropriate development paths:
+            </p>
+            <div className="bg-blue-50 p-3 rounded-md">
+              <p className="font-medium">Talent Zone Placement Formula</p>
+              <p className="mt-1">70% Performance Rating + 30% Skill Enablers = Talent Zone Placement</p>
+              <ul className="mt-2 pl-5 list-disc">
+                <li>Performance ratings (1-5) reflect achievement against goals and impact</li>
+                <li>Skill enablers assess learning agility, drive, adaptability, and innovation</li>
+                <li>Combined scores determine zone placement (Acceleration, Growth, or Support)</li>
+                <li>Readiness level (Ready Now, Ready Soon, Not Ready) is assessed separately</li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Talent Framework Explainer */}
         <TalentFrameworkExplainer />

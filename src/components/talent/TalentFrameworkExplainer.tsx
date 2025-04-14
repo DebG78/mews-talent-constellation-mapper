@@ -22,8 +22,8 @@ const TalentFrameworkExplainer = () => {
               <div className="space-y-2">
                 <h4 className="text-sm font-semibold">Talent Acceleration Framework</h4>
                 <p className="text-xs text-muted-foreground">
-                  Our framework helps identify, develop, and retain top talent by mapping
-                  employees across zones and readiness levels.
+                  Our framework helps identify, develop, and retain top talent by assessing skill enablers
+                  and performance ratings to map employees across zones and readiness levels.
                 </p>
               </div>
             </HoverCardContent>
@@ -31,79 +31,65 @@ const TalentFrameworkExplainer = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="zones">
-          <TabsList className="grid w-full grid-cols-3">
+        <Tabs defaultValue="enablers">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="enablers">Skill Enablers</TabsTrigger>
+            <TabsTrigger value="performance">Performance Ratings</TabsTrigger>
             <TabsTrigger value="zones">Talent Zones</TabsTrigger>
             <TabsTrigger value="readiness">Readiness Levels</TabsTrigger>
-            <TabsTrigger value="performance">Performance Ratings</TabsTrigger>
           </TabsList>
-          <TabsContent value="zones" className="space-y-4 pt-4">
-            <div className="grid gap-4 grid-cols-3">
-              <div className="bg-blue-50 p-3 rounded-md border-l-4 border-acceleration">
-                <h3 className="text-sm font-semibold text-acceleration">Acceleration Zone</h3>
-                <p className="text-xs mt-1">
-                  High-performing employees with strong potential. Priority for development
-                  opportunities and advancement.
-                </p>
-              </div>
-              <div className="bg-amber-50 p-3 rounded-md border-l-4 border-development">
-                <h3 className="text-sm font-semibold text-development">Growth Zone</h3>
-                <p className="text-xs mt-1">
-                  Solid performers who benefit from targeted development to enhance specific
-                  skills or competencies.
-                </p>
-              </div>
-              <div className="bg-red-50 p-3 rounded-md border-l-4 border-support">
-                <h3 className="text-sm font-semibold text-support">Support Zone</h3>
-                <p className="text-xs mt-1">
-                  Employees who need significant improvement or may be better suited for
-                  different roles within the organization.
-                </p>
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              <p className="font-medium">Important Note:</p>
-              <p>
-                An employee can be in any zone regardless of their readiness level. For example, 
-                someone in the Acceleration Zone might still be "Not Ready" for promotion if they 
-                need more experience in their current role.
+          
+          <TabsContent value="enablers" className="space-y-4 pt-4">
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Skill enablers are fundamental capabilities that drive talent growth and success. 
+                Combined with performance ratings, they determine an employee's talent zone placement.
               </p>
+              
+              <div className="grid gap-4 grid-cols-2">
+                <div className="bg-blue-50 p-3 rounded-md border-l-4 border-blue-500">
+                  <h3 className="text-sm font-semibold text-blue-700">Learning Agility</h3>
+                  <p className="text-xs mt-1">
+                    How quickly someone can grasp new concepts and put them into practice. People with high learning 
+                    agility don't just absorb information, they actively seek new challenges and turn learning into results.
+                  </p>
+                </div>
+                
+                <div className="bg-green-50 p-3 rounded-md border-l-4 border-green-500">
+                  <h3 className="text-sm font-semibold text-green-700">Drive & Ambition</h3>
+                  <p className="text-xs mt-1">
+                    People with high drive have a clear vision of what they want to achieve and align it with company goals. 
+                    They take ownership of their growth and actively pursue bigger challenges.
+                  </p>
+                </div>
+                
+                <div className="bg-amber-50 p-3 rounded-md border-l-4 border-amber-500">
+                  <h3 className="text-sm font-semibold text-amber-700">Adaptability & Resilience</h3>
+                  <p className="text-xs mt-1">
+                    The ability to maintain effectiveness during change and pressure, seeing obstacles as 
+                    opportunities, and helping others navigate uncertainty.
+                  </p>
+                </div>
+                
+                <div className="bg-purple-50 p-3 rounded-md border-l-4 border-purple-500">
+                  <h3 className="text-sm font-semibold text-purple-700">Innovation & Initiative</h3>
+                  <p className="text-xs mt-1">
+                    The ability to spot opportunities for improvement, challenge the status quo, and take 
+                    action to make things better without being asked.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-gray-50 p-3 rounded-md">
+                <h3 className="text-sm font-semibold">How Skill Enablers Affect Talent Zones</h3>
+                <p className="text-xs mt-1">
+                  Skill enablers account for 30% of an employee's talent zone placement, while performance ratings 
+                  account for 70%. Together, they provide a comprehensive view of an employee's capabilities and potential.
+                </p>
+              </div>
             </div>
           </TabsContent>
-          <TabsContent value="readiness" className="space-y-4 pt-4">
-            <div className="grid gap-4 grid-cols-3">
-              <div className="bg-green-50 p-3 rounded-md border-l-4 border-ready-now">
-                <h3 className="text-sm font-semibold text-ready-now">Ready Now</h3>
-                <p className="text-xs mt-1">
-                  Immediately ready for promotion or advancement. Has all necessary skills and 
-                  experience for the next level.
-                </p>
-              </div>
-              <div className="bg-amber-50 p-3 rounded-md border-l-4 border-ready-soon">
-                <h3 className="text-sm font-semibold text-ready-soon">Ready Soon</h3>
-                <p className="text-xs mt-1">
-                  Will be ready for advancement after some targeted development. Typically 
-                  6-12 months away from readiness.
-                </p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md border-l-4 border-not-ready">
-                <h3 className="text-sm font-semibold text-not-ready">Not Ready</h3>
-                <p className="text-xs mt-1">
-                  Requires significant development before being considered for advancement. 
-                  Focus on mastering current role.
-                </p>
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              <p className="font-medium">The Zone-Readiness Relationship:</p>
-              <p>
-                Zones (Acceleration, Growth, Support) indicate performance and potential, 
-                while Readiness (Ready Now, Ready Soon, Not Ready) indicates promotion 
-                timeline. These are separate but related concepts - high performers may still 
-                need time before promotion.
-              </p>
-            </div>
-          </TabsContent>
+          
           <TabsContent value="performance" className="space-y-4 pt-4">
             <div className="grid gap-4 grid-cols-1">
               <div className="bg-purple-50 p-3 rounded-md border-l-4 border-purple-600">
@@ -165,6 +151,94 @@ const TalentFrameworkExplainer = () => {
                   May apply to employees who are new to the role or still developing required skills.
                 </p>
               </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="zones" className="space-y-4 pt-4">
+            <div className="grid gap-4 grid-cols-1">
+              <div className="bg-gray-50 p-3 rounded-md">
+                <h3 className="text-sm font-semibold">How Talent Zones Are Determined</h3>
+                <p className="text-xs mt-1">
+                  Each employee's placement in a talent zone is based on a weighted formula:
+                  <br /><br />
+                  <span className="font-medium">Zone Score = (Performance Rating × 70%) + (Skill Enablers Average × 30%)</span>
+                  <br /><br />
+                  • Score ≥ 4.0: Acceleration Zone<br />
+                  • Score 2.5-3.9: Growth Zone<br />
+                  • Score < 2.5: Support Zone
+                </p>
+              </div>
+            
+              <div className="bg-blue-50 p-3 rounded-md border-l-4 border-acceleration">
+                <h3 className="text-sm font-semibold text-acceleration">Acceleration Zone</h3>
+                <p className="text-xs mt-1">
+                  High-performing employees with strong potential. Priority for development
+                  opportunities and advancement.
+                </p>
+                <p className="text-xs mt-1">
+                  <span className="font-medium">Typical characteristics:</span> High performance ratings (4-5) combined with strong skill enablers,
+                  particularly in learning agility and drive.
+                </p>
+              </div>
+              
+              <div className="bg-amber-50 p-3 rounded-md border-l-4 border-development">
+                <h3 className="text-sm font-semibold text-development">Growth Zone</h3>
+                <p className="text-xs mt-1">
+                  Solid performers who benefit from targeted development to enhance specific
+                  skills or competencies.
+                </p>
+                <p className="text-xs mt-1">
+                  <span className="font-medium">Typical characteristics:</span> Moderate to good performance ratings (3-4) with varying skill enabler
+                  scores that may need development in specific areas.
+                </p>
+              </div>
+              
+              <div className="bg-red-50 p-3 rounded-md border-l-4 border-support">
+                <h3 className="text-sm font-semibold text-support">Support Zone</h3>
+                <p className="text-xs mt-1">
+                  Employees who need significant improvement or may be better suited for
+                  different roles within the organization.
+                </p>
+                <p className="text-xs mt-1">
+                  <span className="font-medium">Typical characteristics:</span> Lower performance ratings (1-2) often combined with skill enabler
+                  gaps in critical areas.
+                </p>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="readiness" className="space-y-4 pt-4">
+            <div className="grid gap-4 grid-cols-3">
+              <div className="bg-green-50 p-3 rounded-md border-l-4 border-ready-now">
+                <h3 className="text-sm font-semibold text-ready-now">Ready Now</h3>
+                <p className="text-xs mt-1">
+                  Immediately ready for promotion or advancement. Has all necessary skills and 
+                  experience for the next level.
+                </p>
+              </div>
+              <div className="bg-amber-50 p-3 rounded-md border-l-4 border-ready-soon">
+                <h3 className="text-sm font-semibold text-ready-soon">Ready Soon</h3>
+                <p className="text-xs mt-1">
+                  Will be ready for advancement after some targeted development. Typically 
+                  6-12 months away from readiness.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md border-l-4 border-not-ready">
+                <h3 className="text-sm font-semibold text-not-ready">Not Ready</h3>
+                <p className="text-xs mt-1">
+                  Requires significant development before being considered for advancement. 
+                  Focus on mastering current role.
+                </p>
+              </div>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              <p className="font-medium">The Zone-Readiness Relationship:</p>
+              <p>
+                Zones (Acceleration, Growth, Support) indicate performance and potential, 
+                while Readiness (Ready Now, Ready Soon, Not Ready) indicates promotion 
+                timeline. These are separate but related concepts - high performers may still 
+                need time before promotion.
+              </p>
             </div>
           </TabsContent>
         </Tabs>
