@@ -165,7 +165,7 @@ const TalentFrameworkExplainer = () => {
                   <br /><br />
                   • Score ≥ 4.0: Acceleration Zone<br />
                   • Score 2.5-3.9: Growth Zone<br />
-                  • Score < 2.5: Support Zone
+                  • Score &lt; 2.5: Support Zone
                 </p>
               </div>
             
