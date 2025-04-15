@@ -10,6 +10,7 @@ import EmployeeSnapshotsPanel from "./snapshots/EmployeeSnapshotsPanel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 import MomentumGauge from "../momentum/MomentumGauge";
+import MomentumScoreExplainer from "../momentum/MomentumScoreExplainer";
 import { calculateMomentumScore } from "@/services/momentumService";
 
 interface EmployeeDetailPanelProps {
@@ -86,10 +87,11 @@ const EmployeeDetailPanel = ({
 
           <PerformanceRating rating={employee.performanceRating} />
 
-          {/* Add Momentum Score visualization */}
-          <div>
+          {/* Momentum Score section */}
+          <div className="space-y-2">
             <h3 className="text-sm font-medium mb-2">Momentum Score</h3>
             <MomentumGauge momentumScore={momentumScore} />
+            <MomentumScoreExplainer className="mt-2" />
           </div>
 
           <SkillEnablersSection skillEnablers={employee.skillEnablers} />

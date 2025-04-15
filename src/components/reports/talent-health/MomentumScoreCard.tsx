@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Employee } from "@/types/employee";
@@ -38,6 +39,13 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     { date: new Date(Date.now() - 2 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 52 }
   ];
   
+  // Complete the history with the most recent values
+  const completeHistory = [
+    ...baseHistory,
+    { date: new Date(Date.now() - 1 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 54 },
+    { date: new Date().toISOString(), score: 56 }
+  ];
+  
   // Calculate organization average momentum
   const calculatedOrgAvgMomentum = {
     score: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.score || 0), 0) / employeesWithMomentum.length),
@@ -48,14 +56,7 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     history: completeHistory
   };
   
-  // Complete the history with the most recent values
-  const completeHistory = [
-    ...baseHistory,
-    { date: new Date(Date.now() - 1 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: calculatedOrgAvgMomentum.score - 1 },
-    { date: new Date().toISOString(), score: calculatedOrgAvgMomentum.score }
-  ];
-  
-  // Determine trend based on history with explicit type assertion
+  // Determine trend based on history
   if (calculatedOrgAvgMomentum.history[calculatedOrgAvgMomentum.history.length - 1].score > 
       calculatedOrgAvgMomentum.history[calculatedOrgAvgMomentum.history.length - 2].score + 2) {
     calculatedOrgAvgMomentum.trend = 'increasing';
