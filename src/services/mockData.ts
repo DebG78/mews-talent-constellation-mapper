@@ -1,5 +1,5 @@
 
-import { Employee } from "@/types/employee";
+import { Employee, MomentumScore } from "@/types/employee";
 
 // Generate a random number between min and max (inclusive)
 const randomBetween = (min: number, max: number) => {
@@ -41,6 +41,80 @@ const determinePosition = (zone: 'Acceleration' | 'Growth' | 'Support') => {
   return { x, y, zone };
 };
 
+// Generate a random momentum score based on zone and performance
+const generateMomentumScore = (zone: 'Acceleration' | 'Growth' | 'Support', performanceRating: number): MomentumScore => {
+  // Base score is influenced by zone and performance rating
+  let baseScore: number;
+  
+  switch (zone) {
+    case 'Acceleration':
+      baseScore = randomBetween(60, 90);
+      break;
+    case 'Growth':
+      baseScore = randomBetween(40, 70);
+      break;
+    case 'Support':
+      baseScore = randomBetween(20, 50);
+      break;
+  }
+  
+  // Adjust based on performance rating
+  baseScore += (performanceRating - 3) * 5;
+  baseScore = Math.max(10, Math.min(95, baseScore));
+  
+  // Generate component scores
+  const velocity = baseScore + randomBetween(-10, 10);
+  const acceleration = baseScore + randomBetween(-15, 15);
+  const consistency = baseScore + randomBetween(-20, 20);
+  
+  // Normalize component scores
+  const normalizedVelocity = Math.max(10, Math.min(95, velocity));
+  const normalizedAcceleration = Math.max(10, Math.min(95, acceleration));
+  const normalizedConsistency = Math.max(10, Math.min(95, consistency));
+  
+  // Generate a previous score that makes sense with the current score
+  const previousScore = baseScore - randomBetween(-5, 10);
+  const normalizedPreviousScore = Math.max(5, Math.min(100, previousScore));
+  
+  // Determine trend
+  let trend: 'increasing' | 'stable' | 'decreasing';
+  if (baseScore > normalizedPreviousScore + 5) {
+    trend = 'increasing';
+  } else if (baseScore < normalizedPreviousScore - 5) {
+    trend = 'decreasing';
+  } else {
+    trend = 'stable';
+  }
+  
+  // Generate history
+  const history = [];
+  const now = new Date();
+  
+  // Add 6 history points going back 6 months
+  for (let i = 5; i >= 0; i--) {
+    const date = new Date(now);
+    date.setMonth(now.getMonth() - i);
+    
+    // Generate a score that leads up to the current score
+    const historyScore = normalizedPreviousScore + (i * (baseScore - normalizedPreviousScore) / 5);
+    
+    history.push({
+      date: date.toISOString(),
+      score: Math.round(historyScore)
+    });
+  }
+  
+  return {
+    score: Math.round(baseScore),
+    velocity: Math.round(normalizedVelocity),
+    acceleration: Math.round(normalizedAcceleration),
+    consistency: Math.round(normalizedConsistency),
+    previousScore: Math.round(normalizedPreviousScore),
+    trend,
+    history
+  };
+};
+
 // Generate sample employees
 export const generateMockEmployees = (count: number = 50): Employee[] => {
   const departments = ['Engineering', 'Marketing', 'Sales', 'Product', 'Customer Support', 'Operations', 'Finance', 'HR'];
@@ -73,6 +147,9 @@ export const generateMockEmployees = (count: number = 50): Employee[] => {
     // Assign either IC or Manager role
     const jobGrade = jobGradeOptions[randomBetween(0, 1)];
     
+    // Generate momentum score
+    const momentumScore = generateMomentumScore(zone, performanceRating);
+    
     return {
       id: `EMP-${1000 + i}`,
       name: `Employee ${i + 1}`,
@@ -89,6 +166,7 @@ export const generateMockEmployees = (count: number = 50): Employee[] => {
       zonePosition: determinePosition(zone),
       joinDate: joinDate.toISOString().split('T')[0],
       jobGrade: jobGrade,
+      momentumScore: momentumScore
     };
   });
 };

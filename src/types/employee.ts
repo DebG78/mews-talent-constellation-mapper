@@ -12,6 +12,7 @@ export interface Employee {
   jobGrade?: 'IC' | 'Manager';
   developmentOptions?: DevelopmentOption[];
   snapshots?: EmployeeSnapshot[];
+  momentumScore?: MomentumScore;
 }
 
 export interface DevelopmentOption {
@@ -50,4 +51,17 @@ export interface EmployeeSnapshot {
   readiness: Readiness;
   position: string;
   jobGrade?: 'IC' | 'Manager';
+}
+
+export interface MomentumScore {
+  score: number; // 0-100
+  velocity: number; // 0-100
+  acceleration: number; // 0-100
+  consistency: number; // 0-100
+  previousScore?: number;
+  trend: 'increasing' | 'stable' | 'decreasing';
+  history?: Array<{
+    date: string;
+    score: number;
+  }>;
 }

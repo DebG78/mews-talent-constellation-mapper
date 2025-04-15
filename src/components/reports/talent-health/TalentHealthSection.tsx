@@ -7,6 +7,8 @@ import PredictiveModeling from "./PredictiveModeling";
 import ComparativeBenchmarks from "./ComparativeBenchmarks";
 import HistoricalTrends from "./HistoricalTrends";
 import GrowthVelocityChart from "./GrowthVelocityChart";
+import MomentumScoreCard from "./MomentumScoreCard";
+import { mockEmployees } from "@/services/mockData";
 
 const TalentHealthSection = () => {
   return (
@@ -17,6 +19,9 @@ const TalentHealthSection = () => {
           Comprehensive analysis of talent flow, forecasting, diversity, and risk
         </p>
       </div>
+
+      {/* Momentum Score Analysis */}
+      <MomentumScoreCard employees={mockEmployees} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <TalentFlowSankey />

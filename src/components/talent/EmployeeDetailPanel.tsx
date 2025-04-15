@@ -9,6 +9,8 @@ import DevelopmentOptions from "./development/DevelopmentOptions";
 import EmployeeSnapshotsPanel from "./snapshots/EmployeeSnapshotsPanel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
+import MomentumGauge from "../momentum/MomentumGauge";
+import { calculateMomentumScore } from "@/services/momentumService";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
@@ -62,6 +64,9 @@ const EmployeeDetailPanel = ({
     }
   };
 
+  // Ensure employee has momentum score
+  const momentumScore = employee.momentumScore || calculateMomentumScore(employee);
+
   return (
     <Card className="h-full">
       <CardHeader className="pb-2 pt-4 flex flex-row items-center justify-between">
@@ -80,6 +85,12 @@ const EmployeeDetailPanel = ({
           />
 
           <PerformanceRating rating={employee.performanceRating} />
+
+          {/* Add Momentum Score visualization */}
+          <div>
+            <h3 className="text-sm font-medium mb-2">Momentum Score</h3>
+            <MomentumGauge momentumScore={momentumScore} />
+          </div>
 
           <SkillEnablersSection skillEnablers={employee.skillEnablers} />
 
