@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Employee } from "@/types/employee";
@@ -61,13 +60,13 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     history: completeHistory
   };
   
-  // Determine trend based on history
+  // Determine trend based on history with explicit type assertion
   if (orgAvgMomentum.history[orgAvgMomentum.history.length - 1].score > 
       orgAvgMomentum.history[orgAvgMomentum.history.length - 2].score + 2) {
-    orgAvgMomentum.trend = 'increasing';
+    orgAvgMomentum.trend = 'increasing' as const;
   } else if (orgAvgMomentum.history[orgAvgMomentum.history.length - 1].score <
              orgAvgMomentum.history[orgAvgMomentum.history.length - 2].score - 2) {
-    orgAvgMomentum.trend = 'decreasing';
+    orgAvgMomentum.trend = 'decreasing' as const;
   }
   
   return (
