@@ -2,6 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Employee } from "@/types/employee";
 import { User, Building, CalendarDays } from "lucide-react";
+import { getZoneColor, getReadinessColor } from "@/utils/employeeColorUtils";
 
 interface EmployeeBasicInfoProps {
   employee: Employee;

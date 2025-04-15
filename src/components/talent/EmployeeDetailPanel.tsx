@@ -9,9 +9,9 @@ import DevelopmentOptions from "./development/DevelopmentOptions";
 import EmployeeSnapshotsPanel from "./snapshots/EmployeeSnapshotsPanel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
-import MomentumGauge from "../momentum/MomentumGauge";
-import MomentumScoreExplainer from "../momentum/MomentumScoreExplainer";
 import { calculateMomentumScore } from "@/services/momentumService";
+import MomentumScoreSection from "./momentum/MomentumScoreSection";
+import { getZoneColor, getReadinessColor } from "@/utils/employeeColorUtils";
 
 interface EmployeeDetailPanelProps {
   employee: Employee;
@@ -34,34 +34,6 @@ const EmployeeDetailPanel = ({
     setEmployee(updatedEmployee);
     if (onUpdateEmployee) {
       onUpdateEmployee(updatedEmployee);
-    }
-  };
-
-  // Get zone color
-  const getZoneColor = (zone: string) => {
-    switch (zone) {
-      case 'Acceleration':
-        return 'bg-acceleration text-white';
-      case 'Growth':
-        return 'bg-development text-white';
-      case 'Support':
-        return 'bg-support text-white';
-      default:
-        return 'bg-gray-200 text-gray-800';
-    }
-  };
-
-  // Get readiness color
-  const getReadinessColor = (readiness: string) => {
-    switch (readiness) {
-      case 'Ready Now':
-        return 'bg-ready-now text-white';
-      case 'Ready Soon':
-        return 'bg-ready-soon text-white';
-      case 'Not Ready':
-        return 'bg-not-ready text-white';
-      default:
-        return 'bg-gray-200 text-gray-800';
     }
   };
 
@@ -89,12 +61,8 @@ const EmployeeDetailPanel = ({
 
           <SkillEnablersSection skillEnablers={employee.skillEnablers} />
 
-          {/* Momentum Score section - moved below Skill Enablers */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium mb-2">Momentum Score</h3>
-            <MomentumGauge momentumScore={momentumScore} />
-            <MomentumScoreExplainer className="mt-2" />
-          </div>
+          {/* Momentum Score section now moved below Skill Enablers */}
+          <MomentumScoreSection momentumScore={momentumScore} />
 
           <DevelopmentOptions 
             employee={employee}
