@@ -124,7 +124,7 @@ const PredictiveModeling = () => {
                   }
                   return [value, name];
                 }}
-                labelFormatter={(label, items) => {
+                labelFormatter={(label) => {
                   const dataPoint = predictiveData.find(d => d.month === label);
                   return `${label}${dataPoint?.isPrediction ? ' (Predicted)' : ''}`;
                 }}

@@ -6,6 +6,7 @@ import AttritionRiskMap from "./AttritionRiskMap";
 import PredictiveModeling from "./PredictiveModeling";
 import ComparativeBenchmarks from "./ComparativeBenchmarks";
 import HistoricalTrends from "./HistoricalTrends";
+import GrowthVelocityChart from "./GrowthVelocityChart";
 
 const TalentHealthSection = () => {
   return (
@@ -28,6 +29,10 @@ const TalentHealthSection = () => {
         <PredictiveModeling />
         <ComparativeBenchmarks />
         <HistoricalTrends />
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <GrowthVelocityChart />
       </div>
     </div>
   );

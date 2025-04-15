@@ -25,6 +25,7 @@ import { useToast } from "@/components/ui/use-toast";
 import SnapshotsList from "./SnapshotsList";
 import SnapshotDetails from "./SnapshotDetails";
 import SnapshotComparison from "./SnapshotComparison";
+import SnapshotDetailsTabs from "./SnapshotDetailsTabs";
 
 interface EmployeeSnapshotsPanelProps {
   employee: Employee;
@@ -97,11 +98,11 @@ const EmployeeSnapshotsPanel = ({
       </Button>
       
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent className="sm:max-w-md md:max-w-lg">
+        <SheetContent className="sm:max-w-md md:max-w-lg lg:max-w-xl">
           <SheetHeader className="mb-4">
-            <SheetTitle>Employee Snapshots</SheetTitle>
+            <SheetTitle>Employee Growth Journey</SheetTitle>
             <SheetDescription>
-              View historical snapshots of employee performance, skills, and placement
+              Track employee growth and view historical snapshot data
             </SheetDescription>
           </SheetHeader>
           
@@ -121,17 +122,10 @@ const EmployeeSnapshotsPanel = ({
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100%-120px)]">
-            <div className="border rounded-md p-4 overflow-hidden">
-              <h3 className="font-medium mb-3">Snapshots List</h3>
-              <SnapshotsList 
-                snapshots={snapshots} 
-                onSelectSnapshot={handleSelectSnapshot}
-                selectedSnapshotId={selectedSnapshot?.id}
-              />
-            </div>
+          <div className="space-y-4">
+            <SnapshotDetailsTabs employee={employee} />
             
-            {selectedSnapshot ? (
+            {selectedSnapshot && (
               <div className="border rounded-md p-4 overflow-auto">
                 <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "details" | "comparison")}>
                   <TabsList className="mb-3">
@@ -147,12 +141,6 @@ const EmployeeSnapshotsPanel = ({
                     <SnapshotComparison employee={employee} snapshot={selectedSnapshot} />
                   </TabsContent>
                 </Tabs>
-              </div>
-            ) : (
-              <div className="border rounded-md p-4 flex items-center justify-center text-muted-foreground">
-                <div className="text-center p-4">
-                  <p>Select a snapshot to view details</p>
-                </div>
               </div>
             )}
           </div>
