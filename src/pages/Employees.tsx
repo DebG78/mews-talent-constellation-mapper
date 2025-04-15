@@ -7,6 +7,7 @@ import EmployeeTable from "@/components/talent/EmployeeTable";
 import EmployeeDetailPanel from "@/components/talent/EmployeeDetailPanel";
 import EmployeeHeader from "@/components/talent/EmployeeHeader";
 import OrganizationSnapshotButton from "@/components/talent/snapshots/OrganizationSnapshotButton";
+import MainLayout from "@/components/layout/MainLayout";
 
 const Employees = () => {
   const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
@@ -112,55 +113,57 @@ const Employees = () => {
   const departments = Array.from(new Set(employees.map((emp) => emp.department)));
 
   return (
-    <div className="container py-6 space-y-6 max-w-screen-xl">
-      <div className="flex items-center justify-between">
-        <EmployeeHeader />
-        <OrganizationSnapshotButton onSnapshotCreated={handleOrgSnapshotCreated} />
-      </div>
-
-      <EmployeeFilters
-        departments={departments}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        selectedDepartment={selectedDepartment}
-        onDepartmentChange={setSelectedDepartment}
-        selectedZone={selectedZone}
-        onZoneChange={setSelectedZone}
-        selectedReadiness={selectedReadiness}
-        onReadinessChange={setSelectedReadiness}
-        selectedJobGrade={selectedJobGrade}
-        onJobGradeChange={setSelectedJobGrade}
-        onResetFilters={handleResetFilters}
-      />
-
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <div className="lg:col-span-3">
-          <EmployeeTable
-            employees={filteredEmployees}
-            selectedEmployee={selectedEmployee}
-            onSelectEmployee={handleSelectEmployee}
-            getZoneBadgeClass={getZoneBadgeClass}
-            getReadinessBadgeClass={getReadinessBadgeClass}
-          />
+    <MainLayout>
+      <div className="container py-6 space-y-6 max-w-screen-xl">
+        <div className="flex items-center justify-between">
+          <EmployeeHeader />
+          <OrganizationSnapshotButton onSnapshotCreated={handleOrgSnapshotCreated} />
         </div>
 
-        <div className="lg:col-span-2">
-          {selectedEmployee ? (
-            <EmployeeDetailPanel 
-              employee={selectedEmployee} 
-              onUpdateEmployee={handleUpdateEmployee}
+        <EmployeeFilters
+          departments={departments}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          selectedDepartment={selectedDepartment}
+          onDepartmentChange={setSelectedDepartment}
+          selectedZone={selectedZone}
+          onZoneChange={setSelectedZone}
+          selectedReadiness={selectedReadiness}
+          onReadinessChange={setSelectedReadiness}
+          selectedJobGrade={selectedJobGrade}
+          onJobGradeChange={setSelectedJobGrade}
+          onResetFilters={handleResetFilters}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <div className="lg:col-span-3">
+            <EmployeeTable
+              employees={filteredEmployees}
+              selectedEmployee={selectedEmployee}
+              onSelectEmployee={handleSelectEmployee}
+              getZoneBadgeClass={getZoneBadgeClass}
+              getReadinessBadgeClass={getReadinessBadgeClass}
             />
-          ) : (
-            <div className="border rounded-md flex items-center justify-center h-full py-20 text-muted-foreground bg-muted/50">
-              <div className="text-center p-4">
-                <h3 className="text-lg font-medium mb-2">No Employee Selected</h3>
-                <p>Select an employee from the table to view details</p>
+          </div>
+
+          <div className="lg:col-span-2">
+            {selectedEmployee ? (
+              <EmployeeDetailPanel 
+                employee={selectedEmployee} 
+                onUpdateEmployee={handleUpdateEmployee}
+              />
+            ) : (
+              <div className="border rounded-md flex items-center justify-center h-full py-20 text-muted-foreground bg-muted/50">
+                <div className="text-center p-4">
+                  <h3 className="text-lg font-medium mb-2">No Employee Selected</h3>
+                  <p>Select an employee from the table to view details</p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
