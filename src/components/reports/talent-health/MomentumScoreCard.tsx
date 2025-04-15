@@ -44,7 +44,8 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     velocity: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.velocity || 0), 0) / employeesWithMomentum.length),
     acceleration: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.acceleration || 0), 0) / employeesWithMomentum.length),
     consistency: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.consistency || 0), 0) / employeesWithMomentum.length),
-    trend: 'stable' as const
+    trend: 'stable' as 'increasing' | 'decreasing' | 'stable',
+    history: completeHistory
   };
   
   // Complete the history with the most recent values
@@ -54,19 +55,13 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     { date: new Date().toISOString(), score: calculatedOrgAvgMomentum.score }
   ];
   
-  // Create the final momentum object with the complete history
-  const orgAvgMomentum = {
-    ...calculatedOrgAvgMomentum,
-    history: completeHistory
-  };
-  
   // Determine trend based on history with explicit type assertion
-  if (orgAvgMomentum.history[orgAvgMomentum.history.length - 1].score > 
-      orgAvgMomentum.history[orgAvgMomentum.history.length - 2].score + 2) {
-    orgAvgMomentum.trend = 'increasing' as const;
-  } else if (orgAvgMomentum.history[orgAvgMomentum.history.length - 1].score <
-             orgAvgMomentum.history[orgAvgMomentum.history.length - 2].score - 2) {
-    orgAvgMomentum.trend = 'decreasing' as const;
+  if (calculatedOrgAvgMomentum.history[calculatedOrgAvgMomentum.history.length - 1].score > 
+      calculatedOrgAvgMomentum.history[calculatedOrgAvgMomentum.history.length - 2].score + 2) {
+    calculatedOrgAvgMomentum.trend = 'increasing';
+  } else if (calculatedOrgAvgMomentum.history[calculatedOrgAvgMomentum.history.length - 1].score <
+             calculatedOrgAvgMomentum.history[calculatedOrgAvgMomentum.history.length - 2].score - 2) {
+    calculatedOrgAvgMomentum.trend = 'decreasing';
   }
   
   return (
@@ -90,7 +85,7 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
               </TabsList>
               
               <TabsContent value="organization">
-                <MomentumGauge momentumScore={orgAvgMomentum} showDetails={false} />
+                <MomentumGauge momentumScore={calculatedOrgAvgMomentum} showDetails={false} />
               </TabsContent>
               
               <TabsContent value="components">
@@ -101,20 +96,20 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
                       <div className="h-2 w-full bg-gray-100 rounded-full">
                         <div 
                           className="h-full bg-blue-500 rounded-full"
-                          style={{ width: `${orgAvgMomentum.velocity}%` }}
+                          style={{ width: `${calculatedOrgAvgMomentum.velocity}%` }}
                         ></div>
                       </div>
-                      <div className="text-xs text-right">{orgAvgMomentum.velocity}%</div>
+                      <div className="text-xs text-right">{calculatedOrgAvgMomentum.velocity}%</div>
                     </div>
                     <div className="space-y-1">
                       <div className="text-sm font-medium">Acceleration</div>
                       <div className="h-2 w-full bg-gray-100 rounded-full">
                         <div 
                           className="h-full bg-purple-500 rounded-full"
-                          style={{ width: `${orgAvgMomentum.acceleration}%` }}
+                          style={{ width: `${calculatedOrgAvgMomentum.acceleration}%` }}
                         ></div>
                       </div>
-                      <div className="text-xs text-right">{orgAvgMomentum.acceleration}%</div>
+                      <div className="text-xs text-right">{calculatedOrgAvgMomentum.acceleration}%</div>
                     </div>
                   </div>
                   
@@ -123,10 +118,10 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
                     <div className="h-2 w-full bg-gray-100 rounded-full">
                       <div 
                         className="h-full bg-green-500 rounded-full"
-                        style={{ width: `${orgAvgMomentum.consistency}%` }}
+                        style={{ width: `${calculatedOrgAvgMomentum.consistency}%` }}
                       ></div>
                     </div>
-                    <div className="text-xs text-right">{orgAvgMomentum.consistency}%</div>
+                    <div className="text-xs text-right">{calculatedOrgAvgMomentum.consistency}%</div>
                   </div>
                   
                   <div className="text-xs text-center mt-4 text-muted-foreground">
@@ -144,7 +139,7 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
           </div>
           
           <div className="md:col-span-2">
-            <MomentumTrajectory momentumScore={orgAvgMomentum} className="h-full" />
+            <MomentumTrajectory momentumScore={calculatedOrgAvgMomentum} className="h-full" />
           </div>
         </div>
       </CardContent>
