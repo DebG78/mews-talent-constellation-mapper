@@ -8,6 +8,7 @@ import DepartmentChart from "@/components/reports/DepartmentChart";
 import DepartmentBreakdownChart from "@/components/reports/DepartmentBreakdownChart";
 import PerformanceTrendChart from "@/components/reports/PerformanceTrendChart";
 import KeyInsights from "@/components/reports/KeyInsights";
+import TalentHealthSection from "@/components/reports/talent-health/TalentHealthSection";
 
 const Reports = () => {
   // Generate zone distribution data for pie chart
@@ -94,6 +95,9 @@ const Reports = () => {
           {/* Performance Trends Card */}
           <PerformanceTrendChart data={performanceTrendData} />
         </div>
+
+        {/* Organizational Talent Health Section */}
+        <TalentHealthSection />
 
         <div className="grid gap-6 md:grid-cols-1">
           {/* Key Insights Card */}
