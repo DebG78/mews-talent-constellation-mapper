@@ -6,7 +6,26 @@ import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip as RechartTooltip } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const data = [
+interface HistoricalDataPoint {
+  date: string;
+  acceleration: number;
+  growth: number;
+  support: number;
+  events: string[];
+}
+
+interface PerformanceDataPoint {
+  date: string;
+  average: number;
+}
+
+interface KeyEvent {
+  date: string;
+  event: string;
+  impact: string;
+}
+
+const data: HistoricalDataPoint[] = [
   { date: "Apr 2024", acceleration: 15, growth: 25, support: 10, events: [] },
   { date: "May 2024", acceleration: 17, growth: 24, support: 9, events: [] },
   { date: "Jun 2024", acceleration: 16, growth: 25, support: 9, events: [] },
@@ -22,14 +41,14 @@ const data = [
   { date: "Apr 2025", acceleration: 19, growth: 21, support: 10, events: [] },
 ];
 
-const keyEvents = [
+const keyEvents: KeyEvent[] = [
   { date: "Jul 2024", event: "Leadership Development Program", impact: "Increased Acceleration Zone by 2%" },
   { date: "Sep 2024", event: "Department Reorganization", impact: "Temporary decrease in Growth Zone" },
   { date: "Dec 2024", event: "Annual Performance Reviews", impact: "Zone redistributions across the organization" },
   { date: "Mar 2025", event: "Team Building Workshop", impact: "Improved collaboration scores across zones" },
 ];
 
-const performanceData = [
+const performanceData: PerformanceDataPoint[] = [
   { date: "Apr 2024", average: 3.6 },
   { date: "May 2024", average: 3.7 },
   { date: "Jun 2024", average: 3.7 },
@@ -86,7 +105,10 @@ const HistoricalTrends = () => {
                   <YAxis hide />
                   <RechartTooltip 
                     formatter={(value, name) => {
-                      return [value, name.charAt(0).toUpperCase() + name.slice(1)];
+                      if (typeof name === 'string') {
+                        return [value, name.charAt(0).toUpperCase() + name.slice(1)];
+                      }
+                      return [value, name];
                     }}
                     labelFormatter={(label, items) => {
                       const dataPoint = data.find(d => d.date === label);
@@ -104,6 +126,7 @@ const HistoricalTrends = () => {
                     name="Acceleration"
                     strokeWidth={2}
                     dot={(props) => {
+                      if (!props || props.index === undefined) return null;
                       const dataPoint = data[props.index];
                       if (dataPoint.events && dataPoint.events.length > 0) {
                         return (
@@ -127,6 +150,7 @@ const HistoricalTrends = () => {
                     name="Growth"
                     strokeWidth={2}
                     dot={(props) => {
+                      if (!props || props.index === undefined) return null;
                       const dataPoint = data[props.index];
                       if (dataPoint.events && dataPoint.events.length > 0) {
                         return (
@@ -150,6 +174,7 @@ const HistoricalTrends = () => {
                     name="Support"
                     strokeWidth={2}
                     dot={(props) => {
+                      if (!props || props.index === undefined) return null;
                       const dataPoint = data[props.index];
                       if (dataPoint.events && dataPoint.events.length > 0) {
                         return (

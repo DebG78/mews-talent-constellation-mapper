@@ -7,8 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 
+// Define proper types for our data
+interface BaseDataPoint {
+  month: string;
+  acceleration: number;
+  growth: number;
+  support: number;
+}
+
+interface PredictiveDataPoint extends BaseDataPoint {
+  isPrediction?: boolean;
+}
+
 // Mock data for predictive trends
-const baseData = [
+const baseData: BaseDataPoint[] = [
   { month: 'Apr', acceleration: 18, growth: 22, support: 10 },
   { month: 'May', acceleration: 19, growth: 22, support: 9 },
   { month: 'Jun', acceleration: 19, growth: 23, support: 8 },
@@ -18,9 +30,9 @@ const baseData = [
 ];
 
 // Generate predictive data based on development investment slider
-const generatePredictiveData = (investmentLevel: number) => {
+const generatePredictiveData = (investmentLevel: number): PredictiveDataPoint[] => {
   // Clone base data
-  const data = [...baseData];
+  const data: PredictiveDataPoint[] = [...baseData];
   
   // Calculate future months based on investment level
   // Higher investment = better distribution (more acceleration, less support)
@@ -107,7 +119,10 @@ const PredictiveModeling = () => {
               <YAxis hide />
               <Tooltip 
                 formatter={(value, name) => {
-                  return [value, name.charAt(0).toUpperCase() + name.slice(1)];
+                  if (typeof name === 'string') {
+                    return [value, name.charAt(0).toUpperCase() + name.slice(1)];
+                  }
+                  return [value, name];
                 }}
                 labelFormatter={(label, items) => {
                   const dataPoint = predictiveData.find(d => d.month === label);
