@@ -1,6 +1,6 @@
 
-import MomentumGauge from "../momentum/MomentumGauge";
-import MomentumScoreExplainer from "../momentum/MomentumScoreExplainer";
+import MomentumGauge from "@/components/momentum/MomentumGauge";
+import MomentumScoreExplainer from "@/components/momentum/MomentumScoreExplainer";
 import { MomentumScore } from "@/types/employee";
 
 interface MomentumScoreSectionProps {
