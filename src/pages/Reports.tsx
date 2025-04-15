@@ -18,32 +18,13 @@ const Reports = () => {
     { name: 'Support', value: mockEmployees.filter(e => e.zonePosition.zone === 'Support').length, color: '#CC0000' },
   ];
 
-  // Generate department data by zone
-  const departments = Array.from(new Set(mockEmployees.map(e => e.department)));
-  const departmentData = departments.map(dept => {
-    const empInDept = mockEmployees.filter(e => e.department === dept);
-    return {
-      name: dept,
-      Acceleration: empInDept.filter(e => e.zonePosition.zone === 'Acceleration').length,
-      Growth: empInDept.filter(e => e.zonePosition.zone === 'Growth').length,
-      Support: empInDept.filter(e => e.zonePosition.zone === 'Support').length,
-    };
-  });
-
-  // Generate performance trend data (simulated historical data)
-  const performanceTrendData = [
-    { month: 'Jan', Acceleration: 3.8, Growth: 3.2, Support: 2.5 },
-    { month: 'Feb', Acceleration: 3.9, Growth: 3.3, Support: 2.4 },
-    { month: 'Mar', Acceleration: 4.0, Growth: 3.2, Support: 2.3 },
-    { month: 'Apr', Acceleration: 4.1, Growth: 3.3, Support: 2.4 },
-    { month: 'May', Acceleration: 4.2, Growth: 3.5, Support: 2.5 },
-    { month: 'Jun', Acceleration: 4.3, Growth: 3.4, Support: 2.6 },
-  ];
-
   // Get data for additional charts moved from Dashboard
   const zoneDistribution = getZoneDistribution();
   const readinessDistribution = getReadinessDistribution();
   const departmentDistribution = getDepartmentDistribution();
+
+  // Generate department data by zone
+  const departments = Array.from(new Set(mockEmployees.map(e => e.department)));
 
   // Format data for pie chart
   const zonePieData = [
@@ -70,7 +51,7 @@ const Reports = () => {
       <div className="space-y-6 animate-fade-in">
         <ReportsHeader />
 
-        {/* Distribution by Zone, Readiness, and Department (Moved from Dashboard) */}
+        {/* Distribution by Zone, Readiness, and Department */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <ZoneDistributionChart 
             data={zonePieData} 
@@ -82,18 +63,26 @@ const Reports = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* Zone Distribution Card */}
-          <ZoneDistributionChart 
-            data={zoneData} 
-            title="Zone Distribution" 
-            description="Employees across talent zones" 
-          />
-          
           {/* Department Breakdown Card */}
-          <DepartmentBreakdownChart data={departmentData} />
+          <DepartmentBreakdownChart data={departments.map(dept => {
+            const empInDept = mockEmployees.filter(e => e.department === dept);
+            return {
+              name: dept,
+              Acceleration: empInDept.filter(e => e.zonePosition.zone === 'Acceleration').length,
+              Growth: empInDept.filter(e => e.zonePosition.zone === 'Growth').length,
+              Support: empInDept.filter(e => e.zonePosition.zone === 'Support').length,
+            };
+          })} />
 
           {/* Performance Trends Card */}
-          <PerformanceTrendChart data={performanceTrendData} />
+          <PerformanceTrendChart data={[
+            { month: 'Jan', Acceleration: 3.8, Growth: 3.2, Support: 2.5 },
+            { month: 'Feb', Acceleration: 3.9, Growth: 3.3, Support: 2.4 },
+            { month: 'Mar', Acceleration: 4.0, Growth: 3.2, Support: 2.3 },
+            { month: 'Apr', Acceleration: 4.1, Growth: 3.3, Support: 2.4 },
+            { month: 'May', Acceleration: 4.2, Growth: 3.5, Support: 2.5 },
+            { month: 'Jun', Acceleration: 4.3, Growth: 3.4, Support: 2.6 },
+          ]} />
         </div>
 
         {/* Organizational Talent Health Section */}
