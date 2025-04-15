@@ -79,14 +79,14 @@ const EmployeeFilters = ({
         <div>
           <label className="text-sm font-medium mb-1 block">Department</label>
           <Select 
-            value={selectedDepartment || ''} 
+            value={selectedDepartment || "all"} 
             onValueChange={onDepartmentChange}
           >
             <SelectTrigger>
               <SelectValue placeholder="All Departments" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Departments</SelectItem>
+              <SelectItem value="all">All Departments</SelectItem>
               {departments.map((dept) => (
                 <SelectItem key={dept} value={dept}>{dept}</SelectItem>
               ))}
@@ -97,14 +97,14 @@ const EmployeeFilters = ({
         <div>
           <label className="text-sm font-medium mb-1 block">Zone</label>
           <Select 
-            value={selectedZone || ''} 
+            value={selectedZone || "all"} 
             onValueChange={onZoneChange}
           >
             <SelectTrigger>
               <SelectValue placeholder="All Zones" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Zones</SelectItem>
+              <SelectItem value="all">All Zones</SelectItem>
               <SelectItem value="Acceleration">Acceleration Zone</SelectItem>
               <SelectItem value="Growth">Growth Zone</SelectItem>
               <SelectItem value="Support">Support Zone</SelectItem>
@@ -115,14 +115,14 @@ const EmployeeFilters = ({
         <div>
           <label className="text-sm font-medium mb-1 block">Readiness</label>
           <Select 
-            value={selectedReadiness || ''} 
+            value={selectedReadiness || "all"} 
             onValueChange={onReadinessChange}
           >
             <SelectTrigger>
               <SelectValue placeholder="All Readiness Levels" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Readiness Levels</SelectItem>
+              <SelectItem value="all">All Readiness Levels</SelectItem>
               <SelectItem value="Ready Now">Ready Now</SelectItem>
               <SelectItem value="Ready Soon">Ready Soon</SelectItem>
               <SelectItem value="Not Ready">Not Ready</SelectItem>

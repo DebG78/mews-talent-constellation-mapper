@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { mockEmployees } from "@/services/mockData";
 import { Employee } from "@/types/employee";
@@ -34,15 +35,15 @@ const Employees = () => {
       );
     }
 
-    if (selectedDepartment) {
+    if (selectedDepartment && selectedDepartment !== 'all') {
       filtered = filtered.filter((emp) => emp.department === selectedDepartment);
     }
 
-    if (selectedZone) {
+    if (selectedZone && selectedZone !== 'all') {
       filtered = filtered.filter((emp) => emp.zonePosition.zone === selectedZone);
     }
 
-    if (selectedReadiness) {
+    if (selectedReadiness && selectedReadiness !== 'all') {
       filtered = filtered.filter((emp) => emp.readiness === selectedReadiness);
     }
 
