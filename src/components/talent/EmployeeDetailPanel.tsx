@@ -87,14 +87,14 @@ const EmployeeDetailPanel = ({
 
           <PerformanceRating rating={employee.performanceRating} />
 
-          {/* Momentum Score section */}
+          <SkillEnablersSection skillEnablers={employee.skillEnablers} />
+
+          {/* Momentum Score section - moved below Skill Enablers */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium mb-2">Momentum Score</h3>
             <MomentumGauge momentumScore={momentumScore} />
             <MomentumScoreExplainer className="mt-2" />
           </div>
-
-          <SkillEnablersSection skillEnablers={employee.skillEnablers} />
 
           <DevelopmentOptions 
             employee={employee}
