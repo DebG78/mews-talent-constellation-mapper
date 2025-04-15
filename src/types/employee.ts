@@ -11,6 +11,7 @@ export interface Employee {
   joinDate: string;
   jobGrade?: 'IC' | 'Manager';
   developmentOptions?: DevelopmentOption[];
+  snapshots?: EmployeeSnapshot[];
 }
 
 export interface DevelopmentOption {
@@ -37,3 +38,16 @@ export interface ZonePosition {
 export type Zone = 'Acceleration' | 'Growth' | 'Support';
 export type Readiness = 'Ready Now' | 'Ready Soon' | 'Not Ready';
 export type JobGrade = 'IC' | 'Manager' | 'All';
+
+export interface EmployeeSnapshot {
+  id: string;
+  dateCreated: string;
+  snapshotType: 'Regular Cycle' | 'Manual';
+  context: string;
+  performanceRating: number;
+  skillEnablers: SkillEnablers;
+  zonePosition: ZonePosition;
+  readiness: Readiness;
+  position: string;
+  jobGrade?: 'IC' | 'Manager';
+}

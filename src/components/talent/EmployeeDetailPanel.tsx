@@ -6,6 +6,7 @@ import PerformanceRating from "./PerformanceRating";
 import SkillEnablersSection from "./SkillEnablersSection";
 import DevelopmentSuggestions from "./DevelopmentSuggestions";
 import DevelopmentOptions from "./development/DevelopmentOptions";
+import EmployeeSnapshotsPanel from "./snapshots/EmployeeSnapshotsPanel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 
@@ -63,8 +64,12 @@ const EmployeeDetailPanel = ({
 
   return (
     <Card className="h-full">
-      <CardHeader className="pb-2 pt-4">
+      <CardHeader className="pb-2 pt-4 flex flex-row items-center justify-between">
         <CardTitle className="text-lg truncate">{employee.name}</CardTitle>
+        <EmployeeSnapshotsPanel 
+          employee={employee} 
+          onEmployeeUpdate={handleUpdateEmployee}
+        />
       </CardHeader>
       <ScrollArea className="h-[calc(100%-60px)]">
         <CardContent className="space-y-4 px-4">
