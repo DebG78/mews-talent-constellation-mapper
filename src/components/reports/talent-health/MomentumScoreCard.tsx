@@ -31,24 +31,7 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
   // Get department averages
   const departmentAverages = getDepartmentMomentumAverages(employeesWithMomentum);
   
-  // Calculate organization average momentum
-  const orgAvgMomentum = {
-    score: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.score || 0), 0) / employeesWithMomentum.length),
-    velocity: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.velocity || 0), 0) / employeesWithMomentum.length),
-    acceleration: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.acceleration || 0), 0) / employeesWithMomentum.length),
-    consistency: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.consistency || 0), 0) / employeesWithMomentum.length),
-    trend: 'stable' as const,
-    history: [
-      { date: new Date(Date.now() - 5 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 45 },
-      { date: new Date(Date.now() - 4 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 47 },
-      { date: new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 50 },
-      { date: new Date(Date.now() - 2 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 52 },
-      { date: new Date(Date.now() - 1 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: orgAvgMomentum.score - 1 },
-      { date: new Date().toISOString(), score: orgAvgMomentum.score }
-    ]
-  };
-  
-  // Fixed the reference issue by moving the history definition outside and then assigning it to orgAvgMomentum
+  // Create base history data
   const baseHistory = [
     { date: new Date(Date.now() - 5 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 45 },
     { date: new Date(Date.now() - 4 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 47 },
@@ -56,7 +39,7 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     { date: new Date(Date.now() - 2 * 30 * 24 * 60 * 60 * 1000).toISOString(), score: 52 }
   ];
   
-  // Calculate organization average momentum (fixed version)
+  // Calculate organization average momentum
   const calculatedOrgAvgMomentum = {
     score: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.score || 0), 0) / employeesWithMomentum.length),
     velocity: Math.round(employeesWithMomentum.reduce((sum, emp) => sum + (emp.momentumScore?.velocity || 0), 0) / employeesWithMomentum.length),
@@ -72,7 +55,7 @@ const MomentumScoreCard = ({ employees }: MomentumScoreCardProps) => {
     { date: new Date().toISOString(), score: calculatedOrgAvgMomentum.score }
   ];
   
-  // Final momentum object with correct history
+  // Create the final momentum object with the complete history
   const orgAvgMomentum = {
     ...calculatedOrgAvgMomentum,
     history: completeHistory
