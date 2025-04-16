@@ -6,11 +6,9 @@ import { getZoneColor, getReadinessColor } from "@/utils/employeeColorUtils";
 
 interface EmployeeBasicInfoProps {
   employee: Employee;
-  getZoneColor: (zone: string) => string;
-  getReadinessColor: (readiness: string) => string;
 }
 
-const EmployeeBasicInfo = ({ employee, getZoneColor, getReadinessColor }: EmployeeBasicInfoProps) => {
+const EmployeeBasicInfo = ({ employee }: EmployeeBasicInfoProps) => {
   return (
     <div className="flex flex-col space-y-3">
       <div className="flex justify-between items-center">

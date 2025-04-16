@@ -97,7 +97,7 @@ const DataImport = () => {
       <div className="space-y-6 animate-fade-in">
         <h1 className="text-3xl font-bold tracking-tight">Data Import</h1>
         <p className="text-muted-foreground">
-          Import employee data from Excel or CSV files to update your talent map.
+          Import employee data from Excel or CSV files to update your talent map, including performance scores and readiness assessments.
         </p>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -237,7 +237,7 @@ const DataImport = () => {
                   Optional Columns
                 </h3>
                 <ul className="text-sm pl-6 list-disc text-muted-foreground space-y-1">
-                  <li>Readiness (Ready Now, Ready Soon, Not Ready)</li>
+                  <li><strong>Readiness</strong> (Ready Now, Ready Soon, Not Ready)</li>
                   <li>Skill Enablers: Drive (1-5 scale)</li>
                   <li>Skill Enablers: Learning Agility (1-5 scale)</li>
                   <li>Skill Enablers: Innovation (1-5 scale)</li>
@@ -249,11 +249,19 @@ const DataImport = () => {
               <div className="bg-blue-50 p-3 rounded-md text-sm">
                 <h3 className="font-medium text-blue-700 mb-1">Tip:</h3>
                 <p className="text-blue-600">
-                  Download our template file to ensure your data is correctly formatted for import.
+                  Download our template file with proper formatting for both performance scores and readiness data.
                 </p>
                 <Button variant="link" className="p-0 h-auto text-blue-700 mt-1">
                   Download Template
                 </Button>
+              </div>
+              
+              <div className="bg-green-50 p-3 rounded-md text-sm">
+                <h3 className="font-medium text-green-700 mb-1">About Readiness Levels:</h3>
+                <p className="text-green-600">
+                  Importing readiness data alongside performance ratings provides a more complete view of your talent. 
+                  Readiness levels indicate promotion timeline (Ready Now, Ready Soon, Not Ready).
+                </p>
               </div>
             </CardContent>
           </Card>

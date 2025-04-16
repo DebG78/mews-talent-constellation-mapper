@@ -17,14 +17,16 @@ export const getZoneColor = (zone: string): string => {
 
 // Get readiness color
 export const getReadinessColor = (readiness: string): string => {
-  switch (readiness) {
-    case 'Ready Now':
-      return 'bg-ready-now text-white';
-    case 'Ready Soon':
-      return 'bg-ready-soon text-white';
-    case 'Not Ready':
-      return 'bg-not-ready text-white';
-    default:
-      return 'bg-gray-200 text-gray-800';
+  // Normalize readiness to handle various possible imported formats
+  const normalizedReadiness = readiness ? readiness.trim().toLowerCase() : '';
+  
+  if (normalizedReadiness.includes('ready now') || normalizedReadiness === 'readynow') {
+    return 'bg-ready-now text-white';
+  } else if (normalizedReadiness.includes('ready soon') || normalizedReadiness === 'readysoon') {
+    return 'bg-ready-soon text-white';
+  } else if (normalizedReadiness.includes('not ready') || normalizedReadiness === 'notready') {
+    return 'bg-not-ready text-white';
+  } else {
+    return 'bg-gray-200 text-gray-800';
   }
 };
