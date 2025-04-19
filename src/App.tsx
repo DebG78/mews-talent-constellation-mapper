@@ -12,6 +12,7 @@ import Reports from "./pages/Reports";
 import DataImport from "./pages/DataImport";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import DevelopmentActions from "./pages/DevelopmentActions";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/talent-map" element={<TalentMap />} />
           <Route path="/skill-assessment" element={<SkillAssessment />} />
           <Route path="/employees" element={<Employees />} />
+          <Route path="/development-actions" element={<DevelopmentActions />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/data-import" element={<DataImport />} />
           <Route path="/settings" element={<Settings />} />

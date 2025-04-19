@@ -9,7 +9,8 @@ import {
   ChevronLeft, 
   Home,
   Network,
-  GraduationCap
+  GraduationCap,
+  ListCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -65,6 +66,12 @@ export const Sidebar = () => {
             to="/employees"
             icon={<Users size={20} />}
             label="Employees"
+            collapsed={collapsed}
+          />
+          <SidebarItem
+            to="/development-actions"
+            icon={<ListCheck size={20} />}
+            label="Development Actions"
             collapsed={collapsed}
           />
           <SidebarItem
