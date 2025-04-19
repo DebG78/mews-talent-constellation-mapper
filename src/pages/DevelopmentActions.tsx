@@ -6,6 +6,9 @@ import { Employee } from "@/types/employee";
 import DevelopmentActionsHeader from "@/components/development/DevelopmentActionsHeader";
 import DevelopmentOverview from "@/components/development/DevelopmentOverview";
 import ActiveDevelopmentPlans from "@/components/development/ActiveDevelopmentPlans";
+import DevelopmentCalendar from "@/components/development/DevelopmentCalendar";
+import DepartmentCompletion from "@/components/development/DepartmentCompletion";
+import SkillsBreakdown from "@/components/development/SkillsBreakdown";
 
 const DevelopmentActions = () => {
   const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
@@ -26,7 +29,17 @@ const DevelopmentActions = () => {
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
         <DevelopmentActionsHeader />
-        <DevelopmentOverview employees={employees} />
+        
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <DevelopmentOverview employees={employees} />
+          <DevelopmentCalendar employees={employees} />
+          <SkillsBreakdown employees={employees} />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <DepartmentCompletion employees={employees} />
+        </div>
+
         <ActiveDevelopmentPlans employees={employees} />
       </div>
     </MainLayout>
