@@ -10,7 +10,6 @@ import DepartmentBreakdownChart from "@/components/reports/DepartmentBreakdownCh
 import PerformanceTrendChart from "@/components/reports/PerformanceTrendChart";
 import KeyInsights from "@/components/reports/KeyInsights";
 import TalentHealthSection from "@/components/reports/talent-health/TalentHealthSection";
-import DevelopmentProgressChart from "@/components/reports/DevelopmentProgressChart";
 import { Employee } from "@/types/employee";
 
 const Reports = () => {
@@ -82,11 +81,6 @@ const Reports = () => {
           <DepartmentChart data={departmentBarData} />
         </div>
 
-        {/* Development Progress Section */}
-        <div className="grid gap-6 md:grid-cols-2">
-          <DevelopmentProgressChart employees={employees} />
-        </div>
-
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Department Breakdown Card */}
           <DepartmentBreakdownChart data={departments.map(dept => {
@@ -127,3 +121,4 @@ const Reports = () => {
 };
 
 export default Reports;
+
