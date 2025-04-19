@@ -1,5 +1,5 @@
 
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useRef, useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Employee, Readiness, Zone, JobGrade } from "@/types/employee";
 import { mockEmployees } from "@/services/mockData";
@@ -10,7 +10,7 @@ interface TalentMapProviderProps {
 }
 
 export const TalentMapProvider = ({ children }: TalentMapProviderProps) => {
-  const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [zoom, setZoom] = useState<number>(1);
   const [isPanelVisible, setIsPanelVisible] = useState<boolean>(true);
@@ -32,6 +32,32 @@ export const TalentMapProvider = ({ children }: TalentMapProviderProps) => {
   
   const mapRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  // Load employees from localStorage on initial mount
+  useEffect(() => {
+    try {
+      const storedEmployees = localStorage.getItem('currentEmployees');
+      if (storedEmployees) {
+        setEmployees(JSON.parse(storedEmployees));
+      } else {
+        setEmployees(mockEmployees);
+      }
+    } catch (error) {
+      console.error('Error loading employees from localStorage:', error);
+      setEmployees(mockEmployees);
+    }
+  }, []);
+
+  // Save employees to localStorage whenever they change
+  useEffect(() => {
+    if (employees.length > 0) {
+      try {
+        localStorage.setItem('currentEmployees', JSON.stringify(employees));
+      } catch (error) {
+        console.error('Error saving employees to localStorage:', error);
+      }
+    }
+  }, [employees]);
 
   const filteredEmployees = employees.filter(emp => {
     if (filter.department !== 'All' && emp.department !== filter.department) return false;
