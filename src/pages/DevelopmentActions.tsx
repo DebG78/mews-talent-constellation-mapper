@@ -9,6 +9,8 @@ import ActiveDevelopmentPlans from "@/components/development/ActiveDevelopmentPl
 import DevelopmentCalendar from "@/components/development/DevelopmentCalendar";
 import DepartmentCompletion from "@/components/development/DepartmentCompletion";
 import SkillsBreakdown from "@/components/development/SkillsBreakdown";
+import ManagerActivityTracking from "@/components/development/manager/ManagerActivityTracking";
+import DevelopmentGapsAnalysis from "@/components/development/gaps/DevelopmentGapsAnalysis";
 
 const DevelopmentActions = () => {
   const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
@@ -34,6 +36,11 @@ const DevelopmentActions = () => {
           <DevelopmentOverview employees={employees} />
           <DevelopmentCalendar employees={employees} />
           <SkillsBreakdown employees={employees} />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <ManagerActivityTracking employees={employees} />
+          <DevelopmentGapsAnalysis employees={employees} />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
