@@ -16,12 +16,14 @@ interface TalentMapContextType {
     zone: Zone | 'All';
     readiness: Readiness | 'All';
     jobGrade: JobGrade;
+    hasDevelopmentPlan: boolean;
   };
   setFilter: (filter: {
     department: string;
     zone: Zone | 'All';
     readiness: Readiness | 'All';
     jobGrade: JobGrade;
+    hasDevelopmentPlan: boolean;
   }) => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
