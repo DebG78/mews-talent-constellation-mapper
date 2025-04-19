@@ -19,11 +19,13 @@ export const TalentMapProvider = ({ children }: TalentMapProviderProps) => {
     zone: Zone | 'All';
     readiness: Readiness | 'All';
     jobGrade: JobGrade;
+    hasDevelopmentPlan: boolean;
   }>({
     department: 'All',
     zone: 'All',
     readiness: 'All',
     jobGrade: 'All',
+    hasDevelopmentPlan: false,
   });
   
   const [activeTab, setActiveTab] = useState<string>("filters");
@@ -36,6 +38,7 @@ export const TalentMapProvider = ({ children }: TalentMapProviderProps) => {
     if (filter.zone !== 'All' && emp.zonePosition.zone !== filter.zone) return false;
     if (filter.readiness !== 'All' && emp.readiness !== filter.readiness) return false;
     if (filter.jobGrade !== 'All' && emp.jobGrade !== filter.jobGrade) return false;
+    if (filter.hasDevelopmentPlan && (!emp.developmentOptions || emp.developmentOptions.length === 0)) return false;
     return true;
   });
 
@@ -53,6 +56,7 @@ export const TalentMapProvider = ({ children }: TalentMapProviderProps) => {
       zone: 'All',
       readiness: 'All',
       jobGrade: 'All',
+      hasDevelopmentPlan: false,
     });
     toast({
       title: "Filters Reset",

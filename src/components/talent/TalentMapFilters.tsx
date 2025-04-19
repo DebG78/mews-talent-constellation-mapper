@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -15,6 +14,7 @@ import {
   RadioGroupItem 
 } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface TalentMapFiltersProps {
   employees: Employee[];
@@ -23,12 +23,14 @@ interface TalentMapFiltersProps {
     zone: Zone | 'All';
     readiness: Readiness | 'All';
     jobGrade: JobGrade;
+    hasDevelopmentPlan: boolean;
   };
   setFilter: (filter: {
     department: string;
     zone: Zone | 'All';
     readiness: Readiness | 'All';
     jobGrade: JobGrade;
+    hasDevelopmentPlan: boolean;
   }) => void;
   filteredEmployees: Employee[];
   resetFilters: () => void;
@@ -126,6 +128,19 @@ const TalentMapFilters = ({
               </Label>
             </div>
           </RadioGroup>
+        </div>
+        
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="hasDevelopmentPlan"
+              checked={filter.hasDevelopmentPlan}
+              onCheckedChange={(checked) => 
+                setFilter({...filter, hasDevelopmentPlan: checked as boolean})
+              }
+            />
+            <Label htmlFor="hasDevelopmentPlan">Has Development Plan</Label>
+          </div>
         </div>
         
         <div className="flex space-x-2 pt-2">
