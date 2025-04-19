@@ -1,3 +1,5 @@
+
+import { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { mockEmployees, getZoneDistribution, getReadinessDistribution, getDepartmentDistribution } from "@/services/mockData";
 import ReportsHeader from "@/components/reports/ReportsHeader";
@@ -9,13 +11,31 @@ import PerformanceTrendChart from "@/components/reports/PerformanceTrendChart";
 import KeyInsights from "@/components/reports/KeyInsights";
 import TalentHealthSection from "@/components/reports/talent-health/TalentHealthSection";
 import DevelopmentProgressChart from "@/components/reports/DevelopmentProgressChart";
+import { Employee } from "@/types/employee";
 
 const Reports = () => {
+  // State to track the current employees data
+  const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
+
+  // Load the latest employee data from localStorage if available
+  useEffect(() => {
+    try {
+      const storedEmployees = localStorage.getItem('currentEmployees');
+      if (storedEmployees) {
+        setEmployees(JSON.parse(storedEmployees));
+      }
+    } catch (error) {
+      console.error('Error loading employees data:', error);
+      // Fallback to mock data
+      setEmployees(mockEmployees);
+    }
+  }, []);
+
   // Generate zone distribution data for pie chart
   const zoneData = [
-    { name: 'Acceleration', value: mockEmployees.filter(e => e.zonePosition.zone === 'Acceleration').length, color: '#0088CC' },
-    { name: 'Growth', value: mockEmployees.filter(e => e.zonePosition.zone === 'Growth').length, color: '#FFA500' },
-    { name: 'Support', value: mockEmployees.filter(e => e.zonePosition.zone === 'Support').length, color: '#CC0000' },
+    { name: 'Acceleration', value: employees.filter(e => e.zonePosition.zone === 'Acceleration').length, color: '#0088CC' },
+    { name: 'Growth', value: employees.filter(e => e.zonePosition.zone === 'Growth').length, color: '#FFA500' },
+    { name: 'Support', value: employees.filter(e => e.zonePosition.zone === 'Support').length, color: '#CC0000' },
   ];
 
   // Get data for additional charts moved from Dashboard
@@ -24,7 +44,7 @@ const Reports = () => {
   const departmentDistribution = getDepartmentDistribution();
 
   // Generate department data by zone
-  const departments = Array.from(new Set(mockEmployees.map(e => e.department)));
+  const departments = Array.from(new Set(employees.map(e => e.department)));
 
   // Format data for pie chart
   const zonePieData = [
@@ -64,13 +84,13 @@ const Reports = () => {
 
         {/* Development Progress Section */}
         <div className="grid gap-6 md:grid-cols-2">
-          <DevelopmentProgressChart />
+          <DevelopmentProgressChart employees={employees} />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Department Breakdown Card */}
           <DepartmentBreakdownChart data={departments.map(dept => {
-            const empInDept = mockEmployees.filter(e => e.department === dept);
+            const empInDept = employees.filter(e => e.department === dept);
             return {
               name: dept,
               Acceleration: empInDept.filter(e => e.zonePosition.zone === 'Acceleration').length,
@@ -97,7 +117,7 @@ const Reports = () => {
           {/* Key Insights Card */}
           <KeyInsights 
             zoneData={zoneData} 
-            employees={mockEmployees} 
+            employees={employees} 
             departments={departments} 
           />
         </div>

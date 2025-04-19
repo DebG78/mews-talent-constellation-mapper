@@ -19,9 +19,29 @@ const Employees = () => {
   const [selectedReadiness, setSelectedReadiness] = useState<string | null>(null);
   const [selectedJobGrade, setSelectedJobGrade] = useState<string | null>(null);
 
+  // Load employees from localStorage if available
   useEffect(() => {
-    setEmployees([...mockEmployees]);
+    try {
+      const storedEmployees = localStorage.getItem('currentEmployees');
+      if (storedEmployees) {
+        setEmployees(JSON.parse(storedEmployees));
+      } else {
+        setEmployees([...mockEmployees]);
+      }
+    } catch (error) {
+      console.error('Error loading employees:', error);
+      setEmployees([...mockEmployees]);
+    }
   }, []);
+
+  // Save employees to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem('currentEmployees', JSON.stringify(employees));
+    } catch (error) {
+      console.error('Error saving employees:', error);
+    }
+  }, [employees]);
 
   useEffect(() => {
     let filtered = [...employees];

@@ -4,15 +4,20 @@ import { mockEmployees } from "@/services/mockData";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Employee } from "@/types/employee";
 
-const DevelopmentProgressChart = () => {
+interface DevelopmentProgressChartProps {
+  employees?: Employee[];
+}
+
+const DevelopmentProgressChart = ({ employees = mockEmployees }: DevelopmentProgressChartProps) => {
   // Calculate statistics
-  const employeesWithDevelopment = mockEmployees.filter(e => 
+  const employeesWithDevelopment = employees.filter(e => 
     e.developmentOptions && e.developmentOptions.length > 0
   );
   
   const totalWithDevelopment = employeesWithDevelopment.length;
-  const percentageWithDevelopment = Math.round((totalWithDevelopment / mockEmployees.length) * 100);
+  const percentageWithDevelopment = Math.round((totalWithDevelopment / employees.length) * 100);
   
   // Calculate status distribution
   const statusDistribution = employeesWithDevelopment.reduce((acc, employee) => {
