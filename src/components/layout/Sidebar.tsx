@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -59,7 +60,7 @@ export const Sidebar = () => {
           <SidebarItem
             to="/skill-assessment"
             icon={<GraduationCap size={20} />}
-            label="Skill Assessment"
+            label="Skill Enabler Assessment"
             collapsed={collapsed}
           />
           <SidebarItem
