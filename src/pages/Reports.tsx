@@ -1,4 +1,3 @@
-
 import MainLayout from "@/components/layout/MainLayout";
 import { mockEmployees, getZoneDistribution, getReadinessDistribution, getDepartmentDistribution } from "@/services/mockData";
 import ReportsHeader from "@/components/reports/ReportsHeader";
@@ -9,6 +8,7 @@ import DepartmentBreakdownChart from "@/components/reports/DepartmentBreakdownCh
 import PerformanceTrendChart from "@/components/reports/PerformanceTrendChart";
 import KeyInsights from "@/components/reports/KeyInsights";
 import TalentHealthSection from "@/components/reports/talent-health/TalentHealthSection";
+import DevelopmentProgressChart from "@/components/reports/DevelopmentProgressChart";
 
 const Reports = () => {
   // Generate zone distribution data for pie chart
@@ -60,6 +60,11 @@ const Reports = () => {
           />
           <ReadinessChart data={readinessData} />
           <DepartmentChart data={departmentBarData} />
+        </div>
+
+        {/* Development Progress Section */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <DevelopmentProgressChart />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
