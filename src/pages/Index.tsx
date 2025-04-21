@@ -9,14 +9,16 @@ const Index = () => {
         </div>
       </div>
 
-      <footer className="py-4 bg-gray-200 text-center text-sm text-gray-700">
-        Got ideas or feedback about this app?{" "}
-        <a
-          href="mailto:debora.gallo78@gmail.com"
-          className="text-blue-600 hover:underline"
-        >
-          Drop me a line
-        </a>
+      <footer className="py-6 bg-gray-300 text-center text-base text-gray-800 w-full border-t-2 border-gray-400">
+        <div className="container mx-auto">
+          Got ideas or feedback about this app?{" "}
+          <a
+            href="mailto:debora.gallo78@gmail.com"
+            className="text-blue-600 font-semibold hover:underline"
+          >
+            Drop me a line
+          </a>
+        </div>
       </footer>
     </div>
   );
