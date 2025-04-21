@@ -38,12 +38,13 @@ export const Sidebar = () => {
         <button
           onClick={toggleSidebar}
           className="p-1 rounded-md hover:bg-gray-100 transition-colors"
+          aria-label="Toggle sidebar"
         >
           {collapsed ? <Menu size={20} /> : <ChevronLeft size={20} />}
         </button>
       </div>
 
-      <nav className="flex-1 py-4">
+      <nav className="flex-1 py-4 flex flex-col justify-between">
         <ul className="space-y-1">
           <SidebarItem
             to="/"
@@ -88,16 +89,28 @@ export const Sidebar = () => {
             collapsed={collapsed}
           />
         </ul>
-      </nav>
 
-      <div className="border-t border-gray-200 p-4">
-        <SidebarItem
-          to="/settings"
-          icon={<Settings size={20} />}
-          label="Settings"
-          collapsed={collapsed}
-        />
-      </div>
+        {/* Settings menu and added feedback message below */}
+        <div>
+          <SidebarItem
+            to="/settings"
+            icon={<Settings size={20} />}
+            label="Settings"
+            collapsed={collapsed}
+          />
+          {!collapsed && (
+            <div className="mt-4 px-4 text-xs text-gray-500 leading-relaxed">
+              Got ideas or feedback about this app?{" "}
+              <a
+                href="mailto:debora.gallo78@gmail.com"
+                className="text-blue-600 font-semibold hover:underline"
+              >
+                Drop me a line
+              </a>
+            </div>
+          )}
+        </div>
+      </nav>
     </aside>
   );
 };
