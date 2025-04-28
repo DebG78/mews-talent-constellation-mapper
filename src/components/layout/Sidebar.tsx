@@ -32,7 +32,7 @@ export const Sidebar = () => {
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         {!collapsed && (
           <h1 className="text-xl font-bold text-mews-navy">
-            Mews Talent Acceleration
+            Talent Acceleration
           </h1>
         )}
         <button
